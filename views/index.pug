@@ -1,5 +1,13 @@
 extends layout
 
 block content
+  nav(class="navbar navbar-inverse")
+    div(class="container-fluid")
+      div(class="navbar-header") 
+        a(class="navbar-brand", id="navHead", href="") 
+          span(class="glyphicon glyphicon-chevron-right") 
+          | &nbsp;Application Web
   h1= title
   p Welcome to #{title}
+  script(src='javascripts/jquery-3.2.1.min.js')
+  script(src='javascripts/bootstrap.min.js')
