@@ -8,6 +8,10 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+var Sequelize = require('sequelize');
+var POSTGRESURI = require('./config/database.js').uri;
+var sequelize = new Sequelize(POSTGRESURI);
+
 var app = express();
 
 // view engine setup
