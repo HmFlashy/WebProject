@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="MaMuscu" ng-controller="MainCtrl as main">
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/angular-route.min.js"></script>
+		<title>MaMuscu - {{ title }}</title>
+	</head>
+	<body>
+		<div ng-include="app/template/header.html"></div>
+		<ng-view></ng-view>
+
+
+
+
+		<script type="text/javascript" src="app.js"></script>
+		<script type="text/javascript" src="app/controller/main.js"></script>
+		<script type="text/javascript" src="app/controller/accueil.js"></script>
+	</body>
+</html>
