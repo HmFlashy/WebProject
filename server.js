@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static('../Client'));
+app.use(express.static('Client'));
 
 //app.all('/api/*', [require('./middleware/validatingAuthenticity.js')]);
 app.use('/', require('./routes')(pg));
