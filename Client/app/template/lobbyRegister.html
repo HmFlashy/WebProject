@@ -1,11 +1,58 @@
 <div class="lobby">
-	<form novalidate ng-submit="reg()">
-		<input type="text" ng-model="firstname" placeholder="Prénom" name="firstname" require>
-		<input type="text" ng-model="lastname" placeholder="Nom" name="lastname" require>
-		<input type="email" ng-model="email" placeholder="Email" name="email" require>
-		<input type="text" ng-model="pseudo" placeholder="Pseudo" name="pseudo" require>
-		<input type="password" ng-model="pwd1" placeholder="Mot de Passe" name="pwd1" require>
-		<input type="password" ng-model="pwd2" placeholder="Confirmation Mot de Passe" name="pwd2" require>
-		<input type="submit"  value="S'inscrire">
-	</form>
+	<div class="ui container">
+		<form class="ui segment form myForm" novalidate ng-submit="reg()">
+			<h2 class="ui dividing header">JUST DO IT</h2>
+			<div class="field">
+				<label>Identité</label>
+				<div class="two fields">
+					<div class="ui field labeled input">
+						<div class="ui label">
+							Prenom
+						</div>
+						<input type="text" ng-model="firstname" placeholder="Jean" name="firstname" require>
+					</div>
+					<div class="ui field labeled input">
+						<div class="ui label">
+							Nom
+						</div>
+						<input type="text" ng-model="lastname" placeholder="Dupont" name="lastname" require>
+					</div>
+				</div>
+			</div>
+			
+			<div class="field">
+				<div class="ui labeled input">
+					<div class="ui label">
+						Pseudo
+					</div>
+					<input type="text" ng-model="pseudo" placeholder="Musclor" name="pseudo" require>
+				</div>
+			</div>
+			
+			<div class="field">
+				
+			<div class="ui labeled input">
+				<div class="ui label">
+						Email
+					</div>
+					<input type="email" ng-model="email" placeholder="grosbibi@gmail.com" name="email" require>
+				</div>
+			</div>
+
+			<div class="field">
+				<label>Pour ne pas te faire voler ton compte : 8 caractères mini</label>
+				<div class="two fields">
+					<div class="field input">
+						<input type="password" ng-model="pwd1" placeholder="Mot de Passe" name="pwd1" require>
+					</div>
+					<div class="field input">
+						<input type="password" ng-model="pwd2" placeholder="Confirmation Mot de Passe" name="pwd2" require>
+					</div>
+				</div>
+			</div>
+			<div>
+				<input type="submit" class="ui primary button myButtons"  value="S'inscrire">
+			</div>
+		</form>
+	</div>
 </div>

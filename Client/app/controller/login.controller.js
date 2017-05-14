@@ -6,6 +6,7 @@ app.controller("LoginCtrl", ["$scope", "$http", "$location", function($scope, $h
 			"login": $scope.user.login,
 			"password": $scope.user.password
 		}).then(function(response){
+			
 			$location.path("/home");
 		}, function(response){
 			$scope.wrongAuth = true;

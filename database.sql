@@ -14,9 +14,9 @@ CREATE TABLE Machine (
 idMachine serial,
 machineName varchar(50),
 description varchar(300),
-CONSTRAINT pk_machine PRIMARY KEY (idMachine),
+CONSTRAINT pk_machine PRIMARY KEY (idMachine)
 );
 DROP TABLE Machine;
-INSERT INTO machine VALUES (1, 'Banc dev-coucher', 'Banc permettant de faire des développés couchés', 1);
+INSERT INTO machine VALUES (1, 'Banc dev-coucher', 'Banc permettant de faire des développés couchés');
 SELECT * FROM Machine WHERE idmachine=1;
 INSERT INTO Machine (machineName, description, userid) VALUES ('Lol','Ouai ok', 1);
