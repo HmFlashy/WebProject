@@ -1,9 +1,9 @@
 module.exports = function(pg){
 
 	var machine = {
-		getMachines: function() {
+		getTypesMachines: function() {
 				return function(req, res){
-					pg.query('SELECT * FROM  machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
+					pg.query('SELECT * FROM exercice NATURAL JOIN WHERE iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							res.send(400);
 						}
@@ -15,7 +15,7 @@ module.exports = function(pg){
 		getMachineById: function() {
 				return function(req, res){
 					var id = req.params.id;
-					pg.query('SELECT * FROM machine WHERE idmachine=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
+					pg.query('SELECT * FROM exercice WHERE idexercice=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
 						if(err) {
 							res.send(400);
 						}
@@ -27,15 +27,15 @@ module.exports = function(pg){
 				};
 			},
 
-		addMachine: function() {
+		getMachine: function() {
 				return function(req, res){
-					var machineName = req.body.nameMach;
-					var description = req.body.descMach;
-					if(description == undefined || machineName == undefined){
+					var exerciceName = req.body.nameExerc;
+					var description = req.body.descExerc;
+					if(description == undefined || exerciceName == undefined){
 						res.send(400);
 					}
-					pg.query("INSERT INTO machine VALUES ($1::text,$2::text)", 
-						      [machineName, description], 
+					pg.query("INSERT INTO exercice (exerciceName, description, iduser) VALUES ($1::text,$2::text, $3::int)", 
+						      [exerciceName, description, req.Tid], 
 						      function(err, data) {
 									if(err) {
 										res.send(400);
@@ -87,7 +87,7 @@ module.exports = function(pg){
 											res.send(400);
 										}
 										res.status(200).send({
-											"status" : "success",
+											"status" : "success"
 											"message" : "Machine deleted"
 										});
 									});
@@ -95,5 +95,5 @@ module.exports = function(pg){
 				};
 			}
 	}
-	return machine;
+	return exercice;
 }

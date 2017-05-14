@@ -1,4 +1,3 @@
-
 function Machine(idMachine, machineName, typemachines, userId){
 
 	this.idMachine = idMachine;

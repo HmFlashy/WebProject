@@ -3,9 +3,16 @@ html, body
 	width: 100%;
 }
 
-#subHead
+#header
 {
 	width: 100%;
-	height: 50px;
-	background-color: red;
+	background-color: #EEEEEE;
+	height: 130px;
+}
+
+#subHead
+{
+	overflow:hidden;
+	background-color: #CCCCCC;
+	height: 75%;
 }

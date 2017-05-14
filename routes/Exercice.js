@@ -1,9 +1,9 @@
 module.exports = function(pg){
 
-	var machine = {
-		getMachines: function() {
+	var exercice = {
+		getExercices: function() {
 				return function(req, res){
-					pg.query('SELECT * FROM  machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
+					pg.query('SELECT * FROM Machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							res.send(400);
 						}
@@ -12,10 +12,10 @@ module.exports = function(pg){
 				};
 			},
 
-		getMachineById: function() {
+		getExerciceById: function() {
 				return function(req, res){
 					var id = req.params.id;
-					pg.query('SELECT * FROM machine WHERE idmachine=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
+					pg.query('SELECT * FROM exercice WHERE idexercice=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
 						if(err) {
 							res.send(400);
 						}
@@ -27,15 +27,15 @@ module.exports = function(pg){
 				};
 			},
 
-		addMachine: function() {
+		addExercice: function() {
 				return function(req, res){
-					var machineName = req.body.nameMach;
-					var description = req.body.descMach;
-					if(description == undefined || machineName == undefined){
+					var exerciceName = req.body.nameExerc;
+					var description = req.body.descExerc;
+					if(description == undefined || exerciceName == undefined){
 						res.send(400);
 					}
-					pg.query("INSERT INTO machine VALUES ($1::text,$2::text)", 
-						      [machineName, description], 
+					pg.query("INSERT INTO exercice (exerciceName, description, iduser) VALUES ($1::text,$2::text, $3::int)", 
+						      [exerciceName, description, req.Tid], 
 						      function(err, data) {
 									if(err) {
 										res.send(400);
@@ -45,7 +45,7 @@ module.exports = function(pg){
 				};
 			},
 
-		updateMachine: function() {
+		updateExercice: function() {
 				return function(req, res){
 					var exerciceName = req.body.nameMach;
 					var description = req.body.descMachine;
@@ -70,17 +70,17 @@ module.exports = function(pg){
 				};
 			},
 
-		deleteMachine: function() {
+		deleteExercice: function() {
 				return function(req, res){
 					var id = req.params.id;
 					if(id == undefined){
 						res.send(400);
 					}
-					pg.query('SELECT * FROM exercice NATURAL JOIN machine WHERE iduser=$1::int AND idmachine=$2::int', [req.Tid, id], function(err, data){
+					pg.query('SELECT * FROM exercice NATURAL JOIN users WHERE iduser=$1::int AND idexercice=$2::int', [req.Tid, id], function(err, data){
 						if(err || data.rows.length){
 							res.send(400);
 						}
-						pg.query('DELETE FROM machine WHERE idmachine=$1::int', 
+						pg.query('DELETE FROM exercice WHERE idexercice=$1::int', 
 								  [id], 
 								  function(err, data) {
 										if(err) {
@@ -88,12 +88,12 @@ module.exports = function(pg){
 										}
 										res.status(200).send({
 											"status" : "success",
-											"message" : "Machine deleted"
+											"message" : "Exercice deleted"
 										});
 									});
 					});
 				};
 			}
 	}
-	return machine;
+	return exercice;
 }
