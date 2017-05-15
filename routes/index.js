@@ -11,7 +11,7 @@ module.exports = function(pg){
 	router.post('/authenticate', auth.authenticate());
 	router.post('/register', auth.register());
 
-	router.get('/api/machine', machine.getMachines());
+	router.get('/api/machines', machine.getMachines());
 	router.get('/api/machine/:id', machine.getMachineById());
 	router.post('/api/machine', machine.addMachine());
 	router.put('/api/machine/:id', machine.updateMachine());
@@ -23,7 +23,7 @@ module.exports = function(pg){
 	// router.put('/api/typemachines/:id', machine.getMachine(pg));
 	// router.delete('/api/typemachines/:id', machine.getMachine(pg));
 
-	router.get('/api/exercice', exercice.getExercices());
+	router.get('/api/exercices', exercice.getExercices());
 	router.get('/api/exercice/:id', exercice.getExerciceById());
 	router.post('/api/exercice', exercice.addExercice());
 	router.put('/api/exercice/:id', exercice.updateExercice());
