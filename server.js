@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
 
 app.use(express.static('Client'));
 
-app.all('/api/*', require('./middleware/validatingAuthenticity.js')(pg));
+app.all('/api/*', require('./middlewares/validatingAuthenticity.js')(pg));
 app.use('/', require('./routes')(pg));
 
 // catch 404 and forward to error handler
