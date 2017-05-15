@@ -3,7 +3,7 @@ module.exports = function(pg){
 	var exercice = {
 		getExercices: function() {
 				return function(req, res){
-					pg.query('SELECT * FROM Machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
+					pg.query('SELECT * FROM exercice NATURAL JOIN machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							res.send(400);
 						}
@@ -15,7 +15,7 @@ module.exports = function(pg){
 		getExerciceById: function() {
 				return function(req, res){
 					var id = req.params.id;
-					pg.query('SELECT * FROM exercice WHERE idexercice=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
+					pg.query('SELECT * FROM exercice NATURAL JOIN machine WHERE idexercice=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
 						if(err) {
 							res.send(400);
 						}
