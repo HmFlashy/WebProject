@@ -17,23 +17,17 @@ module.exports = function(pg){
 	router.put('/api/machine/:id', machine.updateMachine());
 	router.delete('/api/machine/:id', machine.deleteMachine());
 
-	// router.get('/api/typemachines', machine.getTypesMachines(pg));
-	// router.get('/api/typemachines/:id', machine.getTypeMachinesById(pg));
-	// router.post('/api/typemachines', machine.addTypeMachines(pg));
-	// router.put('/api/typemachines/:id', machine.getMachine(pg));
-	// router.delete('/api/typemachines/:id', machine.getMachine(pg));
-
 	router.get('/api/exercices', exercice.getExercices());
 	router.get('/api/exercice/:id', exercice.getExerciceById());
 	router.post('/api/exercice', exercice.addExercice());
 	router.put('/api/exercice/:id', exercice.updateExercice());
 	router.delete('/api/exercice/:id', exercice.deleteExercice());
 
-	// router.get('/api/programme', machine.getProgrammes(pg));
-	// router.get('/api/programme/:id', machine.getProgrammeById(pg));
-	// router.post('/api/programme', machine.addProgramme(pg));
-	// router.put('/api/programme/:id', machine.updateProgramme(pg));
-	// router.delete('/api/programme/:id', machine.deleteProgramme(pg));
+	// router.get('/api/trainings', machine.getTrainings());
+	// router.get('/api/lasttrainings/:id', machine.getProgrammeById());
+	// router.post('/api/training', machine.addTraining());
+	// router.put('/api/training/:id', machine.updateTraining());
+	// router.delete('/api/training/:id', machine.deleteTraining());
 
 	// router.get('/api/performance', machine.getPerformances(pg));
 	// router.get('/api/performance/:id', machine.getPerformanceById(pg));
