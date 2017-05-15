@@ -30,17 +30,16 @@ module.exports = function(pg){
 		addMachine: function() {
 				return function(req, res){
 					var machineName = req.body.nameMach;
-					var description = req.body.descMach;
-					if(description == undefined || machineName == undefined){
+					if(machineName == undefined){
 						res.send(400);
 					}
-					pg.query("INSERT INTO machine VALUES ($1::text,$2::text)", 
-						      [machineName, description], 
+					pg.query("INSERT INTO machine VALUES ($1::text,$2::int)", 
+						      [machineName, req.Tid], 
 						      function(err, data) {
 									if(err) {
 										res.send(400);
 									}
-									res.status(201).send("Row added");
+									res.status(201).send("Machine added");
 								});
 				};
 			},
@@ -48,17 +47,16 @@ module.exports = function(pg){
 		updateMachine: function() {
 				return function(req, res){
 					var exerciceName = req.body.nameMach;
-					var description = req.body.descMachine;
 					var id = req.params.id;
 					if(id == undefined || description == undefined || exerciceName == undefined){
 						res.send(400);
 					}
-					pg.query('SELECT * FROM exercice NATURAL JOIN users WHERE iduser=$1::int AND idexercice=$2::int', [req.Tid, id], function(err, data){
+					pg.query('SELECT 1 FROM machine WHERE iduser=$1::int AND idexercice=$2::int', [req.Tid, id], function(err, data){
 						if(err || data.rows.length){
 							res.send(400);
 						}
-						pg.query('UPDATE exercice SET exerciceName=$1::string, description=$2::string WHERE idMachine=$3::int', 
-								  [machineName, description, id], 
+						pg.query('UPDATE machine SET namemachine=$1::text WHERE idMachine=$3::int', 
+								  [machineName], 
 								  function(err, data) {
 										if(err) {
 											res.send(400);
@@ -76,7 +74,7 @@ module.exports = function(pg){
 					if(id == undefined){
 						res.send(400);
 					}
-					pg.query('SELECT * FROM exercice NATURAL JOIN machine WHERE iduser=$1::int AND idmachine=$2::int', [req.Tid, id], function(err, data){
+					pg.query('SELECT * FROM machine WHERE iduser=$1::int AND idmachine=$2::int', [req.Tid, id], function(err, data){
 						if(err || data.rows.length){
 							res.send(400);
 						}
