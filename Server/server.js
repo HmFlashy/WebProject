@@ -22,7 +22,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.use(express.static('Client'));
 
 app.all('/api/*', require('./middlewares/validatingAuthenticity.js')(pg));
 app.use('/', require('./routes')(pg));

@@ -1,19 +1,16 @@
 module.exports = function(pg){
 
 	var exercice = {
-		getExercices: function() {
-				return function(req, res){
+		getExercices: function(req, res){
 					pg.query('SELECT * FROM exercice NATURAL JOIN machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							res.send(400);
 						}
 						res.status(200).send(data.rows);
 					});
-				};
-			},
+				},
 
-		getExerciceById: function() {
-				return function(req, res){
+		getExerciceById: function(req, res){
 					var id = req.params.id;
 					pg.query('SELECT * FROM exercice NATURAL JOIN machine WHERE idexercice=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
 						if(err) {
@@ -24,11 +21,9 @@ module.exports = function(pg){
 						}
 						res.status(200).send(data.rows[0]);
 					});
-				};
-			},
+				},
 
-		addExercice: function() {
-				return function(req, res){
+		addExercice: function(req, res){
 					var exerciceName = req.body.nameExerc;
 					var description = req.body.descExerc;
 					if(description == undefined || exerciceName == undefined){
@@ -42,15 +37,12 @@ module.exports = function(pg){
 									}
 									res.status(201).send("Row added");
 								});
-				};
-			},
-
-		updateExercice: function() {
-				return function(req, res){
+				},
+		updateExercice: function(req, res){
 					var exerciceName = req.body.nameExercice;
 					var description = req.body.descExercice;
 					var idexercice = req.params.idExerc;
-					var idmachine = req.
+					var idmachine = req;
 					if(id == undefined || description == undefined || exerciceName == undefined){
 						res.send(400);
 					}
@@ -67,11 +59,9 @@ module.exports = function(pg){
 									});
 					});
 					
-				};
-			},
+				},
 
-		deleteExercice: function() {
-				return function(req, res){
+		deleteExercice: function(req, res){
 					var id = req.params.id;
 					if(id == undefined){
 						res.send(400);
@@ -92,8 +82,7 @@ module.exports = function(pg){
 										});
 									});
 					});
-				};
-			}
-	}
+				}
+		}
 	return exercice;
 }

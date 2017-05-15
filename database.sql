@@ -43,8 +43,10 @@ CREATE TABLE Performance (
 	rating integer NOT NULL,
 	comment varchar(256) NOT NULL,
 	iduser integer NOT NULL,
+	idtraining integer NOT NULL,
 	CONSTRAINT pk_performance PRIMARY KEY (idPerformance),
-	CONSTRAINT fk_performance_user FOREIGN KEY (iduser) REFERENCES users (iduser) ON DELETE CASCADE
+	CONSTRAINT fk_performance_user FOREIGN KEY (iduser) REFERENCES users (iduser) ON DELETE CASCADE,
+	CONSTRAINT fk_performance_training FOREIGN KEY (idTraining) REFERENCES Training (idTraining) ON DELETE CASCADE
 );
 
 CREATE TABLE Contain (

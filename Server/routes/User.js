@@ -1,8 +1,7 @@
 module.exports = function(pg){
 
 	var user = {
-		getUserById: function() {
-				return function(req, res){
+		getUserById: function(req, res){
 					var id = req.params.id;
 					pg.query('SELECT * FROM Users WHERE idUser=$1::int', [id], function(err, data) {
 						if(err) {
@@ -13,11 +12,9 @@ module.exports = function(pg){
 						}
 						res.status(200).send(data.rows);
 					});
-				};
-			},
+				},
 
-		updateUser: function() {
-				return function(req, res){
+		updateUser: function(req, res){
 					
 					var id = req.body.nameMach;
 					var description = req.body.descMachine;
@@ -30,11 +27,9 @@ module.exports = function(pg){
 									}
 									res.status(200).send("Machine " + machineName + " updated");
 								});
-				};
-			},
+				},
 
-		deleteMachine: function() {
-				return function(req, res){
+		deleteMachine: function(req, res){
 					var id = req.params.id;
 					pg.query('DELETE FROM Machine WHERE idMachine=$1::int', 
 							  [id], 
@@ -44,8 +39,7 @@ module.exports = function(pg){
 									}
 									res.status(200).send(data.rows);
 								});
-				};
-			}
+				}
 	}
 	return user;
 }

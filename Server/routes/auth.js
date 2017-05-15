@@ -5,11 +5,10 @@ module.exports = function(pg){
 	var checkData = require('../promises/checkData.js');
 
 	var auth = {
-		authenticate: function() {
-						return function(req, res) {
+		authenticate: function(req, res) {
 							var login;
-							var password;
-							console.log(req.body);							if(req.body.login != undefined){
+							var password;	
+							if(req.body.login != undefined){
 								login = req.body.login;
 							} else {
 								res.send(400);
@@ -41,7 +40,6 @@ module.exports = function(pg){
 											    }
 												// if user is found and password is right
 												// create a token
-												console.log(user.rows[0]);
 												
 												var payload = {
 													"name": user.rows[0].pseudo,
@@ -63,10 +61,8 @@ module.exports = function(pg){
 										}
 
 									  });
-						}
-					  },
-		register: function() {
-						return function(req, res) {
+						},
+		register: function(req, res) {
 							var firstname = req.body.firstname;
 							var lastname = req.body.lastname;
 							var password = req.body.password;
@@ -94,7 +90,6 @@ module.exports = function(pg){
 								
 						}
 					}
-				}
 
 	return auth;
 }

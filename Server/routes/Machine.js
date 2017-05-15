@@ -1,19 +1,16 @@
 module.exports = function(pg){
 
 	var machine = {
-		getMachines: function() {
-				return function(req, res){
+		getMachines: function(req, res){
 					pg.query('SELECT * FROM  machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							res.send(400);
 						}
 						res.status(200).send(data.rows);
 					});
-				};
-			},
+				},
 
-		getMachineById: function() {
-				return function(req, res){
+		getMachineById: function(req, res){
 					var id = req.params.id;
 					pg.query('SELECT * FROM machine WHERE idmachine=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
 						if(err) {
@@ -24,11 +21,9 @@ module.exports = function(pg){
 						}
 						res.status(200).send(data.rows[0]);
 					});
-				};
-			},
+				},
 
-		addMachine: function() {
-				return function(req, res){
+		addMachine: function(req, res){
 					var machineName = req.body.nameMach;
 					if(machineName == undefined){
 						res.send(400);
@@ -41,11 +36,9 @@ module.exports = function(pg){
 									}
 									res.status(201).send("Machine added");
 								});
-				};
-			},
+				},
 
-		updateMachine: function() {
-				return function(req, res){
+		updateMachine: function(req, res){
 					var exerciceName = req.body.nameMach;
 					var id = req.params.id;
 					if(id == undefined || description == undefined || exerciceName == undefined){
@@ -65,11 +58,9 @@ module.exports = function(pg){
 									});
 					});
 					
-				};
-			},
+				},
 
-		deleteMachine: function() {
-				return function(req, res){
+		deleteMachine: function(req, res){
 					var id = req.params.id;
 					if(id == undefined){
 						res.send(400);
@@ -90,8 +81,7 @@ module.exports = function(pg){
 										});
 									});
 					});
-				};
-			}
+				}
 	}
 	return machine;
 }

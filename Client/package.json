@@ -1,0 +1,13 @@
+{
+  "name": "ClientMaMuscu",
+  "version": "0.0.0",
+  "description": "Client using angular for MyMuscu app",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Hugo Maitre",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
