@@ -47,18 +47,18 @@ module.exports = function(pg){
 
 		updateExercice: function() {
 				return function(req, res){
-					var exerciceName = req.body.nameMach;
-					var description = req.body.descMachine;
-					var id = req.params.id;
+					var exerciceName = req.body.nameExercice;
+					var description = req.body.descExercice;
+					var idexercice = req.params.idExerc;
+					var idmachine = req.
 					if(id == undefined || description == undefined || exerciceName == undefined){
 						res.send(400);
 					}
-					pg.query('SELECT * FROM exercice NATURAL JOIN users WHERE iduser=$1::int AND idexercice=$2::int', [req.Tid, id], function(err, data){
-						if(err || data.rows.length){
+					pg.query('SELECT 1 FROM exercice WHERE idexercice=$1::int AND iduser=2::int',[idexercice, req.Tid], function(err, data){
+					if(err || data.rows.length == 0){
 							res.send(400);
 						}
-						pg.query('UPDATE exercice SET exerciceName=$1::string, description=$2::string WHERE idMachine=$3::int', 
-								  [machineName, description, id], 
+						pg.query('UPDATE exercice SET iduser=$1::int, idexercice=$2::int, idmachine=$3::int, nameexercice=$4::text, descexercice=$5::text', [req.Tid, idexercice, idmachine, exerciceName, description], 
 								  function(err, data) {
 										if(err) {
 											res.send(400);
@@ -76,7 +76,7 @@ module.exports = function(pg){
 					if(id == undefined){
 						res.send(400);
 					}
-					pg.query('SELECT * FROM exercice NATURAL JOIN users WHERE iduser=$1::int AND idexercice=$2::int', [req.Tid, id], function(err, data){
+					pg.query('SELECT 1 FROM exercice WHERE iduser=$1::int AND idexercice=$2::int', [req.Tid, id], function(err, data){
 						if(err || data.rows.length){
 							res.send(400);
 						}
