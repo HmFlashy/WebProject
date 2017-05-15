@@ -2,9 +2,7 @@ module.exports = function(pg){
     
     var training = {
         getTrainings: function(req, res){
-            return function(){
-                
-            }
+            
         },
         
         getTrainingById: function(req, res){
@@ -23,4 +21,5 @@ module.exports = function(pg){
             
         }
     }
+    return training;
 }
