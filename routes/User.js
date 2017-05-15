@@ -47,5 +47,5 @@ module.exports = function(pg){
 				};
 			}
 	}
-	return machine;
+	return user;
 }
