@@ -9,8 +9,7 @@ module.exports = function(pg){
 						return function(req, res) {
 							var login;
 							var password;
-							console.log(req.body);
-							if(req.body.login != undefined){
+							console.log(req.body);							if(req.body.login != undefined){
 								login = req.body.login;
 							} else {
 								res.send(400);
@@ -33,14 +32,17 @@ module.exports = function(pg){
 										}
 										if (user.rows.length == 0) {
 											return res.status(400).send({ success: false, message: 'Erreur d\'authentification, Mauvais identifiant' });
-										} else if (user) {
-											bcrypt.compare(password, user.rows[0].password, function(err, data) {
+										} else if (user
+												) {
+											bcrypt.compare(password, user.rows[0].password, function(err, data) {											    
 											    if(data == false){
-											    	return res.status(400).send({ success: false, message: 'Erreur d\'authentification, Mauvais mot de passe' });
+											        
+												return res.status(400).send({ success: false, message: 'Erreur d\'authentification, Mauvais mot de passe' });
 											    }
 												// if user is found and password is right
 												// create a token
 												console.log(user.rows[0]);
+												
 												var payload = {
 													"name": user.rows[0].pseudo,
 													"email": user.rows[0].email,
