@@ -1,9 +1,16 @@
-<div id="header">
+<div  ng-controller="HeaderCtrl as header" id="header">
 	<div id="subHead">
 		<h1 class="bigTitle"><span class="font">MaMuscu</span></h1>
 		<span>Quand organiser son entrainement n'est plus qu'un gain de temps</span>
 	</div>
-	<nav id="navHead">
-		
+	<nav id="navHead" ng-show="showMenu">
+		<div class="ui six item menu tabular secondary">
+        	<a class="item" ng-click="header.goTo('/mon-espace')">Accueil</a>
+	        <a class="item" ng-click="header.goTo('/mes-entrainements')">Mes Entrainements</a>
+	        <a class="item" ng-click="header.goTo('/mes-exercices')">Mes Exercices</a>
+	        <a class="item" ng-click="header.goTo('/mon-agenda')">Mon Agenda</a>
+	        <a class="item" ng-click="header.goTo('/mes-donnees')">Mes Donnees</a>
+	        <a class="item" ng-click="header.logout()">Deconnexion</a>
+		</div>
 	</nav>
 </div>

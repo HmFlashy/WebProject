@@ -33,8 +33,8 @@ var checkData = {
 				err+='"email": "email absent"';
 			}
 			if(err == ''){
-				pg.query("SELECT 1 FROM users WHERE pseudo=$1::text OR email=$2::text",
-						  [pseudo, email],
+				pg.query("SELECT 1 FROM users WHERE lower(pseudo)=$1::text OR email=$2::text",
+						  [pseudo.toLowerCase(), email],
 						  function(err, res){
 						  	 if(res.rows.length != 0){
 						  	 	err +="'error': 'Pseudo ou email déjà utilisé'";

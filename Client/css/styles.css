@@ -22,7 +22,6 @@ html, body
 	width: 100%;
 	background-color: #EEEEEE;
 	color: white;
-	height: 150px;
 }
 
 .lobby
@@ -38,6 +37,8 @@ html, body
 .myForm
 {
 	margin-top: 15px;
+	width: 50%;
+	margin: auto;
 }
 
 #subHead
@@ -53,4 +54,24 @@ html, body
 .myButtons
 {
 	margin: 20px;
+}
+
+
+@media (max-width: 768px)
+{
+	#header *
+	{
+		padding: 0px;
+		text-align: center;
+	}
+
+	.myForm
+	{
+		width: inherit;
+	}
+}
+
+@media (min-width: 1281px)
+{
+
 }

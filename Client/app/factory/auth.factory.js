@@ -10,16 +10,16 @@ app.factory('AuthenticationFactory', function($window) {
       }
     }
 };
-
   return auth;
 });
 
-app.factory('UserAuthFactory', function($window, APILINK, $location, $http, AuthenticationFactory) {
+app.factory('UserAuthFactory', ['$window', 'APILINK', '$location', '$http', 'AuthenticationFactory',
+  function($window, APILINK, $location, $http, AuthenticationFactory) {
   return {
     login: function(login, password) {
-      return $http.post(APILINK+'/login', {
-        login: login,
-        password: password
+      return $http.post(APILINK+'/authenticate', {
+        "login": login,
+        "password": password
       });
     },
     logout: function() {
@@ -27,19 +27,19 @@ app.factory('UserAuthFactory', function($window, APILINK, $location, $http, Auth
       if (AuthenticationFactory.isLogged) {
 
         AuthenticationFactory.isLogged = false;
-        delete AuthenticationFactory.user;
-        delete AuthenticationFactory.userid;
+        delete AuthenticationFactory.name;
+        delete AuthenticationFactory.id;
 
         delete $window.sessionStorage.token;
-        delete $window.sessionStorage.user;
-        delete $window.sessionStorage.userid;
+        delete $window.sessionStorage.name;
+        delete $window.sessionStorage.id;
 
-        $location.path("/login");
+        $location.path("/connexion");
       }
 
     },
     register: function(firstname, lastname, pseudo, email, password) {
-      return $http.post(APILINK+'/authenticate', {
+      return $http.post(APILINK+'/register', {
         firstname: firstname,
         lastname: lastname,
         pseudo: pseudo,
@@ -48,7 +48,7 @@ app.factory('UserAuthFactory', function($window, APILINK, $location, $http, Auth
       });
     }
 };
-});
+}]);
 
 app.factory('TokenInterceptor', function($q, $window) {
   return {

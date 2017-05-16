@@ -1,53 +1,56 @@
-app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory',
-  function($scope, $window, $location, UserAuthFactory, AuthenticationFactory) {
+app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory', '$rootScope',
+  function($scope, $window, $location, UserAuthFactory, AuthenticationFactory, $rootScope) {
 
-		$scope.login = function() {
- 
-	    var login = $scope.user.login;
-	    var password = $scope.user.password;
-	 
-	    if (login !== undefined && password !== undefined) {
-	    	UserAuthFactory.login(login, password).success(function(data) {
+
+ 		this.register = function(){
+ 			$location.path('/register');
+ 		}
+		this.login = function() {
+	    var log = this.log;
+	    var password = this.pwd;
+	 	console.log(log);
+	    if (log !== undefined && password !== undefined) {
+	    	UserAuthFactory.login(log, password).then(function(data) {
 	       
 	          AuthenticationFactory.isLogged = true;
-	          AuthenticationFactory.user = data.user.login;
-	          AuthenticationFactory.id = data.user.id;
+	          AuthenticationFactory.user = data.name;
+	          AuthenticationFactory.id = data.id;
 	 
 	          $window.sessionStorage.token = data.token;
-	          $window.sessionStorage.user = data.user.login; // to fetch the user details on refresh
-	          $window.sessionStorage.iduser = data.user.id; // to fetch the user details on refresh
+	          $window.sessionStorage.user = data.name;
+	          $window.sessionStorage.iduser = data.id;
+	          $location.path("/mon-espace");
 	 
-	          $location.path("/home");
-	 
-	        }).error(function(status) {
-	          alert('Oops something went wrong!');
+	        }).catch(function(status) {
+	        	//A remplir
 	        });
 	      } else {
-	        alert('Invalid credentials');
+	      	//A remplir
 	      }
 	 
 	    };
 	}]);
 
-app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory", function($scope, $http, $location, UserAuthFactory){
-
-	$scope.reg = function(){
-		var firstname = $scope.firstname || '';
-		var lastname = $scope.lastname || '';
-		var pseudo = $scope.pseudo || '';
-		var email = $scope.email || '';
-		var password = $scope.pwd1 || '';
-		var password2 = $scope.pwd2 || '';
+app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory", "AuthenticationFactory", 
+	function($scope, $http, $location, UserAuthFactory, AuthenticationFactory){
+	this.reg = function(){
+		var firstname = this.firstname || '';
+		var lastname = this.lastname || '';
+		var pseudo = this.pseudo || '';
+		var email = this.email || '';
+		var password = this.pwd1 || '';
+		var password2 = this.pwd2 || '';
 		if(firstname == '' || lastname == '' || pseudo == '' || email == '' || password == '' || password2 == ''){
-			$scope.infoAreMissing = true;
+			this.infoAreMissing = true;
 		}
 		if(password != password2){
-			$scope.passwordInvalid = true;
+			this.passwordInvalid = true;
 		} else {
-			UserAuthFactory.register(firstname, lastname, pseudo, email, password).success(function(data){
-				$location.path("/login");
-			}).error(function(status){
-				$scope.somethingWrong = true;
+			UserAuthFactory.register(firstname, lastname, pseudo, email, password).then(function(data){
+				$location.path("/connexion");
+			}).catch(function(status){
+				console.log(status);
+				this.somethingWrong = true;
 			});
 		}
 	};
