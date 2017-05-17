@@ -1,6 +1,6 @@
-var app = angular.module("MaMuscu", ['ngRoute']);
+var app = angular.module("MaMuscu", ['ngRoute', 'ngResource']);
 
-app.constant('APILINK', 'http://localhost:3000');
+app.constant('api', 'http://localhost:3000');
 
 app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($httpProvider, $locationProvider, $routeProvider) {
     $locationProvider.html5Mode(true);
@@ -34,8 +34,8 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
     })
     .when('/mes-exercices', {
         templateUrl: 'app/template/exercices.html',
-        controller: 'ExercicesCtrl',
-        controllerAs: 'exercice',
+        controller: 'ExercisesCtrl',
+        controllerAs: 'exercise',
         access: {
             requiredLogin: true
         }
@@ -56,10 +56,8 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
             requiredLogin: true
         }
     })
-    .otherwise('/connexion', {
-        templateUrl: 'app/template/login.html',
-        controller: 'LoginCtrl',
-        controllerAs: 'login'
+    .otherwise({
+        redirectTo: '/connexion'
     });
 }]);
 
@@ -70,7 +68,9 @@ app.run(function($rootScope, $window, $location, AuthenticationFactory) {
  
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if ((nextRoute.access && nextRoute.access.requiredLogin) && !AuthenticationFactory.isLogged) {
-      $location.path("/connexion");
+      if(!$location.path() == '/connexion' && $location.path() != '/inscription'){
+            $location.path("/connexion");
+        }
     } else {
       // check if user object exists else fetch it. This is incase of a page refresh
       if (!AuthenticationFactory.name) {
@@ -82,7 +82,7 @@ app.run(function($rootScope, $window, $location, AuthenticationFactory) {
   $rootScope.$on('$routeChangeSuccess', function(event, nextRoute, currentRoute) {
     $rootScope.showMenu = AuthenticationFactory.isLogged;
     // if the user is already logged in, take him to the home page
-    if (AuthenticationFactory.isLogged == true && $location.path() == '/connexion' || $location.path() == '/inscription') {
+    if (AuthenticationFactory.isLogged == true && ($location.path() == '/connexion' || $location.path() == '/inscription')) {
             $location.path('/mon-espace');
     }
   });

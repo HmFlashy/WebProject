@@ -6,37 +6,40 @@ module.exports = function(pg){
 	var router = express.Router();
 
 	var machine = require('./Machine.js')(pg);
-	var exercice = require('./Exercice.js')(pg);
+	var exercice = require('./Exercise.js')(pg);
 	var performance = require('./Performance.js')(pg);
+	var training = require('./Training.js')(pg);
 	var auth = require('./auth.js')(pg);
 
 	router.post('/authenticate', auth.authenticate);
 	router.post('/register', auth.register );
 
 	router.get('/api/machines', machine.getMachines);
-	router.get('/api/machine/:id', machine.getMachineById);
-	router.post('/api/machine', machine.addMachine);
-	router.put('/api/machine/:id', machine.updateMachine);
-	router.delete('/api/machine/:id', machine.deleteMachine);
+	router.get('/api/machines/:id', machine.getMachineById);
+	router.post('/api/machines', machine.addMachine);
+	router.put('/api/machines/:id', machine.updateMachine);
+	router.delete('/api/machines/:id', machine.deleteMachine);
 
-	router.get('/api/exercices', exercice.getExercices);
-	router.get('/api/exercice/:id', exercice.getExerciceById);
-	router.post('/api/exercice', exercice.addExercice);
-	router.put('/api/exercice/:id', exercice.updateExercice);
-	router.delete('/api/exercice/:id', exercice.deleteExercice);
+	router.get('/api/exercises', exercice.getExercises);
+	router.get('/api/exercises/:id', exercice.getExerciseById);
+	router.post('/api/exercises', exercice.addExercise);
+	router.put('/api/exercises/:id', exercice.updateExercise);
+	router.delete('/api/exercises/:id', exercice.deleteExercise);
+	//router.get('/api/trainings/:id/exercises', exercice.getTrainingExercises)
 
-	// router.get('/api/trainings', machine.getTrainings());
+	router.get('/api/trainings', training.getTrainings);
+	router.post('/api/trainings/:idtraining/exercises/:idexercise', training.addTrainingExercise);
 	// router.get('/api/lasttrainings/:id', machine.getProgrammeById());
-	// router.post('/api/training', machine.addTraining());
+	router.post('/api/trainings', training.addTraining);
 	// router.put('/api/training/:id', machine.updateTraining());
 	// router.delete('/api/training/:id', machine.deleteTraining());
 
 
 	router.get('/api/performances', performance.getPerformances);
-	router.get('/api/performance/:id', performance.getPerformanceById);
-	router.post('/api/performance', performance.addPerformance);
-	router.delete('/api/performance/:id', performance.deletePerformance);
-	router.get('/api/lastperformances/:number/:offset', performance.getPerformances);
+	router.get('/api/performances/:id', performance.getPerformanceById);
+	router.post('/api/performances', performance.addPerformance);
+	router.delete('/api/performances/:id', performance.deletePerformance);
+	router.get('/api/performances/:number/last/:offset', performance.getPerformances);
 
 	/*router.get('/api/user/:id', machine.getUserById(pg));
 	router.post('/api/user', machine.addUser(pg));

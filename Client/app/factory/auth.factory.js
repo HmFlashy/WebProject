@@ -13,11 +13,11 @@ app.factory('AuthenticationFactory', function($window) {
   return auth;
 });
 
-app.factory('UserAuthFactory', ['$window', 'APILINK', '$location', '$http', 'AuthenticationFactory',
-  function($window, APILINK, $location, $http, AuthenticationFactory) {
+app.factory('UserAuthFactory', ['$window', 'api', '$location', '$http', 'AuthenticationFactory',
+  function($window, api, $location, $http, AuthenticationFactory) {
   return {
     login: function(login, password) {
-      return $http.post(APILINK+'/authenticate', {
+      return $http.post(api+'/authenticate', {
         "login": login,
         "password": password
       });
@@ -39,7 +39,7 @@ app.factory('UserAuthFactory', ['$window', 'APILINK', '$location', '$http', 'Aut
 
     },
     register: function(firstname, lastname, pseudo, email, password) {
-      return $http.post(APILINK+'/register', {
+      return $http.post(api+'/register', {
         firstname: firstname,
         lastname: lastname,
         pseudo: pseudo,
@@ -55,8 +55,7 @@ app.factory('TokenInterceptor', function($q, $window) {
     request: function(config) {
       config.headers = config.headers || {};
       if ($window.sessionStorage.token) {
-        config.headers['X-Access-Token'] = $window.sessionStorage.token;
-        config.headers['Content-Type'] = "application/json";
+        config.headers['Authorization'] = 'Bearer ' + $window.sessionStorage.token;
       }
       return config || $q.when(config);
     },

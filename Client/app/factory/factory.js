@@ -5,3 +5,60 @@ app.factory('Page', function() {
      setTitle: function(newTitle) { this.title = newTitle }
    };
 });
+
+app.factory('ExercisesFactory', ['$http', 'api', function($http, api){
+	
+	return {
+		addExercise: function(name, desc, idmachine) {
+	      return $http.post(api+'/api/exercises', {
+	        "nameExerc": name,
+	        "descExerc": desc,
+	        "machine": idmachine
+	      });
+	    },
+
+	    getExercises: function() {
+	      return $http.get(api+'/api/exercises');
+	    }
+	};
+}]);
+
+app.factory('MachinesFactory', ['$http', 'api', function($http, api){
+
+	return {
+		addMachine: function(name){
+			return $http.post(api + '/api/machines', {
+				"nameMach" : name
+			})
+		},
+
+		getMachines: function(){
+			return $http.get(api + '/api/machines');
+		}
+	};
+}]);
+
+app.factory('TrainingsFactory', ['$http', 'api', function($http, api){
+
+	return {
+		addTraining: function(nametraining, desctraining){
+			return $http.post(api + '/api/trainings', {
+				"nameMach" : nametraining,
+				"descMach" : desctraining
+			})
+		},
+
+		addTrainingExercise: function(idtraining, exercise, indice){
+			return $http.post(api + '/api/trainings/'+idtraining+'/exercises/'+exercise.idexercise, {
+				"last": exercise.last,
+				"numbertimes": exercise.numbertimes,
+				"numbereachtime": exercise.numbereachtime,
+				"numero": indice
+			})
+		},
+
+		getTrainings: function(){
+			return $http.get(api + '/api/trainings');
+		}
+	};
+}]);

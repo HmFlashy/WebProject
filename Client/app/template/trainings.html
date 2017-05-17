@@ -1,0 +1,40 @@
+<section>
+	<h1>Mes entrainements : </h1>
+	<div ng-repeat="trgs in training.trainings">
+		<h1>{{ trgs[0].nametraining }}</h1>
+		<div ng-repeat="t in trgs">
+			<span>{{ t.totaltime }} minutes</span>
+		</div>
+	</div>
+</section>
+<section>
+	<h1>Nouvel entrainement: </h1>
+	<div>
+		<form>
+			<select ng-change="training.typeChange()" ng-model="training.type">
+				<option value="">Type d'exercice</option>
+				<option value="0">Cardio</option>
+				<option value="1">Muscu</option>
+			</select>
+			<select type="text" ng-model="training.idexercise" name="mach">
+				<option value="">Quel exercice?</option>
+				<option ng-repeat="exs in training.exs" value="{{ exs.idexercise }}">{{ exs.nameexercise }}</option>
+			</select>
+			<input type="number" placeholder="Combien de temps?" ng-model="training.last" name="last">
+			<input type="number" placeholder="Nombre de séries" ng-model="training.nbseries" ng-show="!training.isCardio" name="nbseries">
+			<input type="number" placeholder="Séries de combien?" ng-model="training.nbforeachseries" ng-show="!training.isCardio" name="nbforeachseries">
+			<button ng-click="training.addExercise()">Ajout d'un exercice</button>
+			<input type="text" ng-model="training.nametraining" placeholder="Nom de l'entrainement" name="nametg">
+			<textarea type="text" cols="30" rows="5" ng-model="training.desctraining" placeholder="Description" name="desctg"></textarea>
+			<button type="submit" ng-click="training.addTraining()">Ajouter l'entrainement</button>
+		</form>
+	</div>
+	<div>
+		<div ng-repeat="exercise in training.trainingExercises">
+			<p>
+				<h4>{{ exercise.numero }}</h4>
+			</p>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="js/ajoutExercice.js"></script>

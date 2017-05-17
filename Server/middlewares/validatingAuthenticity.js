@@ -38,7 +38,6 @@ module.exports = function(pg){
 	        				  	req.Tid = decoded.id;
 	        				  	req.Tname = decoded.name;
 	        				  	req.Temail = decoded.email;
-	        				  	console.log(req);
 	        				  	next();
 	        				  });
 	        	}

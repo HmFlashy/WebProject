@@ -1,24 +1,28 @@
 <div class="lobby">
-	<p ng-hide="!wrongAuth">Mauvais Identifiant ou Mot de passe</p>
-	<form novalidate class="ui form segment myForm" ng-submit="login.login()">
-		<h2 class="ui dividing header">Connecte toi!</h2>
-		<div class="field">
-				<div class="ui field labeled input">
-					<div class="ui label">
-						Prenom
-					</div>
-					<input type="text" ng-model="login.log" placeholder="Pseudo ou Email" name="login" require>
+	<div class="ui one column stackable center aligned page grid">
+		<div class="column nine wide">
+			<p ng-hide="!wrongAuth">Mauvais Identifiant ou Mot de passe</p>
+			<form novalidate class="ui form segment myForm">
+				<h2 class="ui dividing header">Connecte toi!</h2>
+				<div class="field">
+						<div class="ui field labeled input">
+							<div class="ui label">
+								Login
+							</div>
+							<input type="text" ng-model="login.log" placeholder="Pseudo ou Email" name="login" require>
+						</div>
+						<div class="ui field labeled input">
+							<div class="ui label">
+								Mot de passe
+							</div>
+							<input type="password" ng-model="login.pwd" placeholder="*********" name="password" require>
+						</div>
 				</div>
-				<div class="ui field labeled input">
-					<div class="ui label">
-						Nom
-					</div>
-					<input type="password" ng-model="login.pwd" placeholder="Mot de Passe" name="password" require>
+				<div class="field">
+					<input class="ui button primary" type="submit" ng-click="login.login()"  value="Let's go!">
+					<input class="ui button orange" type="button" ng-click="login.register()" value="Pas de compte?">
 				</div>
+			</form>
 		</div>
-		<div class="field">
-			<input class="ui button primary" type="submit"  value="Let's go!">
-			<input class="ui button primary" type="submit" ng-click="login.goTo('/register')" value="Pas de compte?">
-		</div>
-	</form>
+	</div>
 </div>

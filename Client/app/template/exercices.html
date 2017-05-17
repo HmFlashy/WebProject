@@ -1,16 +1,24 @@
 <section>
 	<h2>Ajoutez un exercice:</h2>
-	<form class="ui form" novalidate>
-		<input class="" type="text" name="nmExercice" placeholder="">
-	    <div class="ui toggle checkbox">
-			<input type="checkbox" tabindex="0" class="hidden">
-			<label>Slider</label>
-  		</div>
-	</form>
+
+	<input type="text" ng-model="exercise.newmachine" placeholder="Nom de la machine" name="ajoutmachine"><button ng-click="exercise.addMachine()">
+	<i class="plus icon"></i>Ajout Machine</button>
+			<form class="" novalidate>
+				<input class="" type="text" ng-model="exercise.nameexercise" name="nmExercice" placeholder="Nom de l'exercice" require>
+				<input class="resizable" type="text" ng-model="exercise.descexercise" name="descExercice" placeholder="Ton exercices en quelques mots" require>
+					<select type="text" ng-model="exercise.choixmachine" name="mach" placeholder="Nom de la machine">
+						<option value="">Quel outil?</option>
+						<option ng-repeat="mch in exercise.mchs" value="{{ mch.idmachine }}">{{ mch.namemachine }}</option>
+					</select>
+				<button ng-click="exercise.addExercice()"><i class="plus icon"></i>Ajout Exercice</button>
+			</form>
+	
 </section>
 <section>
 	<h2>Vos exercices: </h2>
-	<div ng-repeat="ex in exercices">
-		
+	<div class="" ng-repeat="exo in exercise.exs">
+		<h3>{{ exo.nameexercise }} : </h3>
+		<h4>{{ exo.namemachine }}</h4>
+		<p>{{ exo.descexercise }}</p>
 	</div>
 </section>

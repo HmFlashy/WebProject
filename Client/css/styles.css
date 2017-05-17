@@ -1,6 +1,6 @@
 @font-face {
     font-family: heroesLegend;
-    src: url(../fonts/avangeance.ttf);
+    src: url(assets/fonts/avangeance.ttf);
 }
 
 html, body
@@ -39,6 +39,11 @@ html, body
 	margin-top: 15px;
 	width: 50%;
 	margin: auto;
+}
+
+.resizable
+{
+	resize: true;
 }
 
 #subHead

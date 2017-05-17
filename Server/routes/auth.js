@@ -18,8 +18,7 @@ module.exports = function(pg){
 							} else {
 								return res.send(400);
 							}
-							console.log(req.body.login);
-							console.log(req.body.password);
+							login = login.toLowerCase();
 							pg.query("SELECT * FROM users WHERE lower(pseudo)=$1::text OR email=$1::text",
 									  [login], 
 									  function(err, user) {
@@ -41,7 +40,6 @@ module.exports = function(pg){
 											    }
 												// if user is found and password is right
 												// create a token
-												console.log(user.rows[0].pseudo)
 												var payload = {
 													"name": user.rows[0].pseudo,
 													"email": user.rows[0].email,
@@ -53,7 +51,7 @@ module.exports = function(pg){
 												});
 
 												// return the information including token as JSON
-												return res.json({
+												return res.status(200).json({
 													success: true,
 													message: 'Enjoy your token!',
 													token: token

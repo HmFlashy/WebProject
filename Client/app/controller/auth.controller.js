@@ -3,36 +3,41 @@ app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory'
 
 
  		this.register = function(){
- 			$location.path('/register');
+ 			$location.path('/inscription');
  		}
 		this.login = function() {
-	    var log = this.log;
-	    var password = this.pwd;
-	 	console.log(log);
-	    if (log !== undefined && password !== undefined) {
-	    	UserAuthFactory.login(log, password).then(function(data) {
-	       
-	          AuthenticationFactory.isLogged = true;
-	          AuthenticationFactory.user = data.name;
-	          AuthenticationFactory.id = data.id;
-	 
-	          $window.sessionStorage.token = data.token;
-	          $window.sessionStorage.user = data.name;
-	          $window.sessionStorage.iduser = data.id;
-	          $location.path("/mon-espace");
-	 
-	        }).catch(function(status) {
-	        	//A remplir
-	        });
-	      } else {
-	      	//A remplir
-	      }
+		    var log = this.log;
+		    var password = this.pwd;
+		    if (log !== undefined && password !== undefined) {
+		    	UserAuthFactory.login(log, password).then(function(response) {
+		       
+					var data = response.data;
+					AuthenticationFactory.isLogged = true;
+					AuthenticationFactory.user = data.name;
+					AuthenticationFactory.id = data.id;
+
+					$window.sessionStorage.token = data.token;
+					$window.sessionStorage.user = data.name;
+					$window.sessionStorage.iduser = data.id;
+					$location.path("/mon-espace");
+
+		        }).catch(function(status) {
+		        	//A remplir
+		        });
+		      } else {
+		      	//A remplir
+		     }
 	 
 	    };
 	}]);
 
 app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory", "AuthenticationFactory", 
 	function($scope, $http, $location, UserAuthFactory, AuthenticationFactory){
+
+		this.login = function(){
+			$location.path('/connexion');
+		}
+
 	this.reg = function(){
 		var firstname = this.firstname || '';
 		var lastname = this.lastname || '';
@@ -46,10 +51,9 @@ app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory
 		if(password != password2){
 			this.passwordInvalid = true;
 		} else {
-			UserAuthFactory.register(firstname, lastname, pseudo, email, password).then(function(data){
+			UserAuthFactory.register(firstname, lastname, pseudo, email, password).then(function(response){
 				$location.path("/connexion");
 			}).catch(function(status){
-				console.log(status);
 				this.somethingWrong = true;
 			});
 		}
