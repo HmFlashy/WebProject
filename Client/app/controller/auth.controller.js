@@ -22,10 +22,15 @@ app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory'
 					$location.path("/mon-espace");
 
 		        }).catch(function(status) {
-		        	//A remplir
+		        	if (status.status == 401)
+			            alert("Le mot de passe est incorrect");
+					else if (status.status == 404)
+						alert("Le nom d'utilisateur ou email est incorrect");
+					else
+						alert("Une erreur est survenue");
 		        });
 		      } else {
-		      	//A remplir
+		      	alert("Des informations sont manquantes");
 		     }
 	 
 	    };
@@ -37,26 +42,30 @@ app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory
 		this.login = function(){
 			$location.path('/connexion');
 		}
-
-	this.reg = function(){
-		var firstname = this.firstname || '';
-		var lastname = this.lastname || '';
-		var pseudo = this.pseudo || '';
-		var email = this.email || '';
-		var password = this.pwd1 || '';
-		var password2 = this.pwd2 || '';
-		if(firstname == '' || lastname == '' || pseudo == '' || email == '' || password == '' || password2 == ''){
-			this.infoAreMissing = true;
-		}
-		if(password != password2){
-			this.passwordInvalid = true;
-		} else {
-			UserAuthFactory.register(firstname, lastname, pseudo, email, password).then(function(response){
-				$location.path("/connexion");
-			}).catch(function(status){
-				this.somethingWrong = true;
-			});
-		}
-	};
+		this.reg = function(){
+			var firstname = this.firstname || '';
+			var lastname = this.lastname || '';
+			var pseudo = this.pseudo || '';
+			var email = this.email || '';
+			var password = this.pwd1 || '';
+			var password2 = this.pwd2 || '';
+			if(firstname == '' || lastname == '' || pseudo == '' || email == '' || password == '' || password2 == ''){
+				alert("Des informations sont manquantes")
+			} else if(password != password2){
+				alert("Les deux mots de passes sont différents")
+				this.pwd1 = "";
+				this.pwd2 = "";
+			} else {
+				UserAuthFactory.register(firstname, lastname, pseudo, email, password).then(function(response){
+					$location.path("/connexion");
+				}).catch(function(status){
+					if(status.status == 401){
+						alert("Le pseudo est déjà pris")
+					} else {
+						alert("Une erreur est survenue")
+					}
+				});
+			}
+		};
 
 }]);

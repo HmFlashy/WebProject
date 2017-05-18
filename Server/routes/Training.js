@@ -11,8 +11,7 @@ module.exports = function(pg){
                       [req.Tid], 
                     function(err, data){
                       if(err){
-                        console.log(err);
-                        return res.send(400);
+                        return res.send(err.http_code);
                       }
                       return res.status(200).json(data.rows);
                   });
@@ -32,8 +31,7 @@ module.exports = function(pg){
                 [nametraining, desctraining, req.Tid],
                 function(err, data){
                     if(err){
-                        console.log(err);
-                        return res.send(400);
+                        return res.send(err.http_code);
                     }
                     return res.status(200).send(data.rows);
                 });
@@ -50,18 +48,26 @@ module.exports = function(pg){
                 [idexercise, idtraining, numero, last, numbertimes, numbereachtime],
                 function(err, data){
                     if(err){
-                        console.log(err);
+                        return res.send(err.http_code)
                     }
                     return res.send(200);
                 });
         },
         
-        updateTraining: function(req, res){
-            
-        },
-        
         deleteTraining: function(req, res){
-            
+            var id = req.params.id;
+            pg.query('DELETE FROM training WHERE idtraining=$1::int CASCADE',
+                  [id],
+                  function(err, data){
+                    if(err){
+                      return res.send(err.http_code);
+                    }
+                    return res.status(200).send({
+                      status: true,
+                      message: "Training deleted"
+                    })
+                  });
+            }
         }
     }
     return training;

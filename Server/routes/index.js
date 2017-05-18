@@ -25,21 +25,17 @@ module.exports = function(pg){
 	router.post('/api/exercises', exercice.addExercise);
 	router.put('/api/exercises/:id', exercice.updateExercise);
 	router.delete('/api/exercises/:id', exercice.deleteExercise);
-	//router.get('/api/trainings/:id/exercises', exercice.getTrainingExercises)
 
 	router.get('/api/trainings', training.getTrainings);
 	router.post('/api/trainings/:idtraining/exercises/:idexercise', training.addTrainingExercise);
-	// router.get('/api/lasttrainings/:id', machine.getProgrammeById());
 	router.post('/api/trainings', training.addTraining);
-	// router.put('/api/training/:id', machine.updateTraining());
-	// router.delete('/api/training/:id', machine.deleteTraining());
+	router.delete('/api/training/:id', training.deleteTraining());
 
 
 	router.get('/api/performances', performance.getPerformances);
 	router.get('/api/performances/:id', performance.getPerformanceById);
 	router.post('/api/performances', performance.addPerformance);
 	router.delete('/api/performances/:id', performance.deletePerformance);
-	router.get('/api/performances/:number/last/:offset', performance.getPerformances);
 
 	/*router.get('/api/user/:id', machine.getUserById(pg));
 	router.post('/api/user', machine.addUser(pg));

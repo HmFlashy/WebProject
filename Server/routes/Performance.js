@@ -9,7 +9,7 @@ var performance = {
               [req.Tid], 
             function(err, data){
               if(err){
-                return res.send(400);
+                return res.send(err.http_code);
               }
               return res.status(200).send(data.rows);
           });
@@ -27,7 +27,7 @@ var performance = {
             [req.Tid, idperformance], 
           function(err, data){
             if(err){
-              return res.send(400);
+              return res.send(err.http_code);
             }
             return res.status(200).send(data.rows);
         });
@@ -47,7 +47,7 @@ var performance = {
             [req.Tid, idperformance, offsetPerf], 
           function(err, data){
             if(err){
-              return res.send(400);
+              return res.send(err.http_code);
             }
             return res.status(200).send(data.rows);
         });
@@ -64,9 +64,7 @@ var performance = {
                   [rating, comment, req.Tid, idtraining],
                   function(err, data){
                     if(err){
-                      return res.status(400).send({
-                        status: false
-                      });
+                      return res.send(err.http_code);
                     }
                     return res.status(200).send({
                       status: true,
@@ -81,9 +79,7 @@ var performance = {
                   [id],
                   function(err, data){
                     if(err){
-                      return res.status(400).send({
-                        status: false
-                      });
+                      return res.send(err.http_code);
                     }
                     return res.status(200).send({
                       status: true,

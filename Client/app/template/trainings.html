@@ -1,10 +1,12 @@
 <section>
 	<h1>Mes entrainements : </h1>
-	<div ng-repeat="trgs in training.trainings">
-		<h1>{{ trgs.nametraining }}</h1>
-		<span>{{ trgs.totaltime }} minutes</span>
-		<div ng-repeat="(key, t) in trgs.exercises">
-			<span>{{ key + 1 }}: {{ t.nameexercise }}</span>
+	<div class="horizontal">
+		<div class="exercisebloc" ng-repeat="trgs in training.trainings">
+			<h1>{{ trgs.nametraining }}</h1>
+			<span>{{ trgs.totaltime }} minutes</span>
+			<div ng-repeat="(key, t) in trgs.exercises track by t.numero">
+				<span>{{ key + 1 }}: {{ t.nameexercise }}</span>
+			</div>
 		</div>
 	</div>
 </section>
@@ -27,7 +29,8 @@
 			<button ng-click="training.addExercise()">Ajout d'un exercice</button>
 			<input type="text" ng-model="training.nametraining" placeholder="Nom de l'entrainement" name="nametg">
 			<textarea type="text" cols="30" rows="5" ng-model="training.desctraining" placeholder="Description" name="desctg"></textarea>
-			<button type="submit" ng-click="training.addTraining()">Ajouter l'entrainement</button>
+			<button type="submit" ng-click="training.addTraining()">Ajouter l'entrainement<i ng-show=""this.wait" class="spinner icon"></i>
+</button>
 		</form>
 	</div>
 	<div>

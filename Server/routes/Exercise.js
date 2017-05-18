@@ -5,7 +5,7 @@ module.exports = function(pg){
 					pg.query('SELECT * FROM exercise NATURAL JOIN machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							console.log(err);
-							return res.send(400);
+							return res.send(err.http_code);
 						}
 						return res.status(200).send(data.rows);
 					});
@@ -15,7 +15,7 @@ module.exports = function(pg){
 					var id = req.params.id;
 					pg.query('SELECT * FROM exercise NATURAL JOIN machine WHERE idexercise=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
 						if(err) {
-							return res.send(400);
+							return res.send(err.http_code);
 						}
 						if(data.rows.length == 0){
 							res.status(404).send("This Exercise does not exist");
@@ -36,7 +36,7 @@ module.exports = function(pg){
 						      function(err, data) {
 									if(err) {
 										console.log(err);
-										return res.send(400);
+										return res.send(err.http_code);
 									}
 									return res.status(201).send(data);
 								});
@@ -53,7 +53,7 @@ module.exports = function(pg){
 						[req.Tid, idexercise, idmachine, exerciseName, description], 
 							  function(err, data) {
 									if(err) {
-										return res.send(400);
+										return res.send(err.http_code);
 									}
 									return res.status(200).send("Machine " + machineName + " updated");
 								});

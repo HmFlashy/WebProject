@@ -5,7 +5,7 @@ module.exports = function(pg){
 					var id = req.params.id;
 					pg.query('SELECT * FROM Users WHERE idUser=$1::int', [id], function(err, data) {
 						if(err) {
-							return console.error('error running query', err);
+							return res.send(err.http_code);
 						}
 						if(data.rows.length == 0){
 							res.status(404).send("Machine does not exist");
@@ -23,7 +23,7 @@ module.exports = function(pg){
 							  [machineName, description, id], 
 							  function(err, data) {
 									if(err) {
-										return console.error('error running query', err);
+										return res.send(err.http_code);
 									}
 									res.status(200).send("Machine " + machineName + " updated");
 								});
@@ -35,7 +35,7 @@ module.exports = function(pg){
 							  [id], 
 							  function(err, data) {
 									if(err) {
-										return console.error('error running query', err);
+										return res.send(err.http_code);
 									}
 									res.status(200).send(data.rows);
 								});

@@ -1,6 +1,6 @@
 var app = angular.module("MaMuscu", ['ngRoute', 'ngResource']);
 
-app.constant('api', 'http://localhost:3000');
+app.constant('api', 'http://mamuscu.sytes.net:3000');
 
 app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($httpProvider, $locationProvider, $routeProvider) {
     $locationProvider.html5Mode(true);

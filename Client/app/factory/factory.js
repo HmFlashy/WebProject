@@ -19,6 +19,10 @@ app.factory('ExercisesFactory', ['$http', 'api', function($http, api){
 
 	    getExercises: function() {
 	      return $http.get(api+'/api/exercises');
+	    },
+
+	    deleteExercise: function(idexercise){
+	    	return $http.delete(api + '/api/exercises/'+idexercise);
 	    }
 	};
 }]);
@@ -34,6 +38,10 @@ app.factory('MachinesFactory', ['$http', 'api', function($http, api){
 
 		getMachines: function(){
 			return $http.get(api + '/api/machines');
+		},
+
+		deleteMachine: function(idmachine){
+			return $http.delete(api + '/api/machines/'+idmachine);
 		}
 	};
 }]);

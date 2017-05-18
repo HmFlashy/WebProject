@@ -11,6 +11,17 @@ html, body
 	background-repeat: no-repeat;
 }
 
+.horizontal{
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+section
+{
+	background-color: white;
+}
+
 .font
 {
 	font-family: heroesLegend;
@@ -44,6 +55,24 @@ html, body
 .resizable
 {
 	resize: true;
+}
+
+.exercisebloc
+{
+	padding: 14px;
+	background-color: rgba(255, 0, 0, 0.3);
+	border-radius: 4px;
+	margin: 5px;
+	width: 300px;
+	display: inline-block;
+	transition: box-shadow 1s;
+
+}
+
+.exercisebloc:hover
+{
+	box-shadow: 2px 2px;
+
 }
 
 #subHead
