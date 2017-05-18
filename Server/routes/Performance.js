@@ -2,7 +2,7 @@ module.exports = function(pg){
 
 var performance = {
     getPerformances: function(req, res){
-      pg.query('SELECT \
+      pg.query('SELECT * \
             FROM performance \
             NATURAL JOIN training \
             WHERE iduser=$1::int',

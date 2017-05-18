@@ -1,9 +1,10 @@
 <section>
 	<h1>Mes entrainements : </h1>
 	<div ng-repeat="trgs in training.trainings">
-		<h1>{{ trgs[0].nametraining }}</h1>
-		<div ng-repeat="t in trgs">
-			<span>{{ t.totaltime }} minutes</span>
+		<h1>{{ trgs.nametraining }}</h1>
+		<span>{{ trgs.totaltime }} minutes</span>
+		<div ng-repeat="(key, t) in trgs.exercises">
+			<span>{{ key + 1 }}: {{ t.nameexercise }}</span>
 		</div>
 	</div>
 </section>
@@ -33,6 +34,8 @@
 		<div ng-repeat="exercise in training.trainingExercises">
 			<p>
 				<h4>{{ exercise.numero }}</h4>
+				<h4>{{ exercise.nameexercice }}</h4>
+				<h4>{{ exercise.last }}</h4>
 			</p>
 		</div>
 	</div>

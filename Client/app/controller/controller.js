@@ -78,16 +78,50 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "ExercisesFactory",
 	function($scope, $location, TrainingsFactory, ExercisesFactory){
 
-		this.trainings = {};
+		this.trainings = [];
 
-		TrainingsFactory.getTrainings().then(function(response){
-			var data = response.data;
-			if(data.length == 0){
-				$scope.training.notraining = true;
-			} else {
-				$scope.training.trainings = data;
-			}
-		});
+		this.trainingslength;
+
+		this.updateTrainings = function(){
+			TrainingsFactory.getTrainings().then(function(response){
+				var data = response.data;
+				this.trainingslength = data.length;
+				if(data.length == 0){
+					$scope.training.notraining = true;
+				} else {
+					var trainingsdata = [];
+					var index = -1;
+					var training = {
+						"idtraining": undefined,
+						"nametraining": undefined,
+						"totaltime": undefined,
+						"desctraining": undefined,
+						"exercises": []
+					};
+					for(var row in data){
+						if(data[row].idtraining != index){
+							if(index != -1){
+								this.training.exercises(exercises);
+								trainingsdata.push(training);
+							}
+							index = data[row].idtraining;
+							training.idtraining = index;
+							training.nametraining = data[row].nametraining;
+							training.totaltime = data[row].totaltime;
+							training.desctraining = data[row].desctraining;
+						}
+						var exercise = {};
+						exercise.idexercise = data[row].idexercise;
+						exercise.nameexercise = data[row].nameexercise;
+						training.exercises.push(exercise)
+					}
+					trainingsdata.push(training);
+					$scope.training.trainings = trainingsdata;
+				}
+			});
+		}
+
+		this.updateTrainings();
 
 
 		this.isCardio = true;
@@ -98,7 +132,9 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 			if(data.length == 0){
 				$scope.training.noexercises = true;
 			} else {
+				console.log(data);
 				$scope.training.exs = data;
+
 			}
 		});
 
@@ -113,7 +149,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 		$scope.$on('trainingReady', function(event, training){
 			var i = 0;
 			for(i = 0; i < $scope.training.trainingExercises.length; i++){
-				TrainingsFactory.addTrainingExercise(training[0].idtraining, $scope.training.trainingExercises[i], i+1).then(function(respone){
+					TrainingsFactory.addTrainingExercise(training[0].idtraining, $scope.training.trainingExercises[i], i+1).then(function(respone){
 				}).catch(function(response){
 
 				});
@@ -168,6 +204,11 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 ]);
 
 app.controller("UserDataCtrl", 
+	function(){
+
+});
+
+app.controller("AgendaCtrl", 
 	function(){
 
 });

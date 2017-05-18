@@ -2,18 +2,19 @@ module.exports = function(pg){
     
     var training = {
         getTrainings: function(req, res){
-            pg.query('SELECT idtraining, nametraining, desctraining, idexercise, nameexercise, numero, sum(last) as totaltime\
+            pg.query('SELECT idtraining, nametraining, desctraining, idexercise, nameexercise, numero, totaltime \
                     FROM training \
-                    NATURAL JOIN contain \
+                    NATURAL JOIN (SELECT idtraining, sum(last) as totaltime FROM training natural join contain GROUP BY idtraining) as b \
+                    NATURAL JOIN contain  \
                     NATURAL JOIN exercise \
-                    WHERE iduser=$1::int\
-                    GROUP BY idtraining, numero, nametraining, desctraining, idexercise, nameexercise',
+                    WHERE iduser=$1::int',
                       [req.Tid], 
                     function(err, data){
                       if(err){
+                        console.log(err);
                         return res.send(400);
                       }
-                      return res.status(200).send(data.rows);
+                      return res.status(200).json(data.rows);
                   });
         },
         
