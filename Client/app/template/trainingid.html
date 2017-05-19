@@ -1,0 +1,30 @@
+<section>
+	<div class="ui segment">
+		<h1>{{ trainingid.training.nametraining }}</h1>
+		<h3>Durée de l'entrainement : {{ trainingid.training.totaltime }} minute(s)</h3>
+		<div class="ui divider"></div>
+		<h2>Exercices : </h2>
+		<div style="padding: 10px;" ng-repeat="exo in trainingid.training.exercises">
+			<h4>{{ exo.numero }}. {{ exo.nameexercise }}, durée : {{ exo.last }} minutes.</h4>
+			<p style="padding-left: 15px;">Type d'exercice: <span ng-if="exo.type != 'muscu'">Cardio</span>
+								<div ng-if="exo.type == 'muscu'">
+									<span>Musculation</span>
+									<p>Nombre de séries: {{ exo.numertimes }}</p>
+									<p>Nombre par série: {{ exo.numbereachtime }}</p>
+								</div>
+			</p>
+			<p style="padding-left: 15px;">Machine utilisée: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span><span>Aucune</span></p>
+		</div>
+		<div class="ui divider"></div>
+		<h2>Ajoute une performance : </h2>
+		<form class="ui form">
+			<h3 class="ui dividing header">Note-toi sur 10</h3>
+			<jk-rating-stars max-rating="10" rating="trainingid.rating" ></jk-rating-stars>
+			<div class="field">
+				<textarea type="text"  cols="30" rows="5" ng-model="trainingid.commentperf" placeholder="Commentaires sur ta performance" name="desctg"></textarea>
+			</div>
+
+			<button ng-click="trainingid.addPerformance()" class="ui button primary">Ajouter une performance</button>
+		</form>
+	</div>
+</section>

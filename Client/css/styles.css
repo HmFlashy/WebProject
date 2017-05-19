@@ -11,6 +11,11 @@ html, body
 	background-repeat: no-repeat;
 }
 
+h3
+{
+	margin-top:5px;
+}
+
 .horizontal{
     width: 100%;
     overflow-x: scroll;
@@ -20,6 +25,8 @@ html, body
 section
 {
 	background-color: white;
+	margin: 5px;
+	padding: 14px;
 }
 
 .font
@@ -59,13 +66,17 @@ section
 
 .exercisebloc
 {
-	padding: 14px;
+  	position: relative;
+	padding: 18px;
 	background-color: rgba(255, 0, 0, 0.3);
 	border-radius: 4px;
 	margin: 5px;
-	width: 300px;
+	width: auto;
+	height: 150px;
 	display: inline-block;
 	transition: box-shadow 1s;
+	overflow-y: auto;
+	overflow-x: hidden;
 
 }
 
@@ -91,6 +102,13 @@ section
 }
 
 
+.exercisebloc .remove.icon
+{
+	position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
 @media (max-width: 768px)
 {
 	#header *
@@ -108,4 +126,21 @@ section
 @media (min-width: 1281px)
 {
 
+}
+
+
+::-webkit-scrollbar
+{
+  width: 6px;  /* for vertical scrollbars */
+  height: 6px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.5);
 }

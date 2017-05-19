@@ -27,14 +27,15 @@ module.exports = function(pg){
 	router.delete('/api/exercises/:id', exercice.deleteExercise);
 
 	router.get('/api/trainings', training.getTrainings);
+	router.get('/api/trainings/:idtraining', training.getTrainingById);
 	router.post('/api/trainings/:idtraining/exercises/:idexercise', training.addTrainingExercise);
 	router.post('/api/trainings', training.addTraining);
-	router.delete('/api/training/:id', training.deleteTraining());
+	router.delete('/api/trainings/:id', training.deleteTraining);
 
 
 	router.get('/api/performances', performance.getPerformances);
 	router.get('/api/performances/:id', performance.getPerformanceById);
-	router.post('/api/performances', performance.addPerformance);
+	router.post('/api/performances/:idtraining', performance.addPerformance);
 	router.delete('/api/performances/:id', performance.deletePerformance);
 
 	/*router.get('/api/user/:id', machine.getUserById(pg));

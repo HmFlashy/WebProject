@@ -1,4 +1,4 @@
-var app = angular.module("MaMuscu", ['ngRoute', 'ngResource']);
+var app = angular.module("MaMuscu", ['ngRoute', 'jkAngularRatingStars']);
 
 app.constant('api', 'http://mamuscu.sytes.net:3000');
 
@@ -28,6 +28,14 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
         templateUrl: 'app/template/trainings.html',
         controller: 'TrainingsCtrl',
         controllerAs: 'training',
+        access: {
+            requiredLogin: true
+        }
+    })
+    .when('/mes-entrainements/:id', {
+        templateUrl: 'app/template/trainingid.html',
+        controller: 'TrainingIdCtrl',
+        controllerAs: 'trainingid',
         access: {
             requiredLogin: true
         }

@@ -2,7 +2,7 @@ module.exports = function(pg){
 
 	var exercise = {
 		getExercises: function(req, res){
-					pg.query('SELECT * FROM exercise NATURAL JOIN machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
+					pg.query('SELECT idexercise, nameexercise, descexercise, e.idmachine, namemachine FROM exercise e LEFT JOIN machine m ON e.idmachine = m.idmachine WHERE e.iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							console.log(err);
 							return res.send(err.http_code);
@@ -13,7 +13,7 @@ module.exports = function(pg){
 
 		getExerciseById: function(req, res){
 					var id = req.params.id;
-					pg.query('SELECT * FROM exercise NATURAL JOIN machine WHERE idexercise=$1::int AND iduser=$2::int', [id, req.Tid], function(err, data) {
+					pg.query('SELECT idexercise, nameexercise, descexercise, e.idmachine, namemachine FROM exercise e LEFT JOIN machine m ON e.idmachine = m.idmachine WHERE idexercise=$1::int AND e.iduser=$2::int', [id, req.Tid], function(err, data) {
 						if(err) {
 							return res.send(err.http_code);
 						}

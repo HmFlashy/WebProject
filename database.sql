@@ -30,6 +30,7 @@ CREATE TABLE Training (
 
 CREATE TABLE Performance (
 	idPerformance serial,
+	dateperf date NOT NULL,
 	rating integer NOT NULL,
 	comment varchar(256) NOT NULL,
 	iduser integer NOT NULL,

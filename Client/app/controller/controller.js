@@ -1,6 +1,6 @@
 app.controller("HomeCtrl", ["$http", "$scope", 
 	function($http, $scope){
-		$scope.title = "Accueil";
+		
 	}
 ]);
 
@@ -19,8 +19,8 @@ app.controller("HeaderCtrl", ["$location", "UserAuthFactory", "AuthenticationFac
 app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "ExercisesFactory", "MachinesFactory",
 	function($location, $http, $scope, api, ExercisesFactory, MachinesFactory){
 
-		this.exs = {};
-		this.mchs = {};
+		this.exs = [];
+		this.mchs = [];
 
 
 		this.updateExercises = function(){
@@ -39,6 +39,7 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 				var data = response.data;
 				if(data.length == 0){
 					$scope.exercise.nomachines = true;
+					$scope.exercise.mchs = [];
 				} else {
 					$scope.exercise.mchs = data;
 				}
@@ -76,8 +77,9 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 				MachinesFactory.addMachine(this.newmachine).then(function(response){
 					var data = response.data;
 					$scope.exercise.mchs.push(data);
-					$scope.exercise.namemachine = "";
+					$scope.exercise.newmachine = "";
 				}).catch(function(response){
+					console.log(response);
 					if(response.status != 200){
 						alert("Un problème est survenu")
 					}
@@ -92,9 +94,9 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 				} else {
 					machine = parseInt(this.choixmachine);
 				}
-				ExercisesFactory.addExercise(this.nameexercise, this.descexercise, machine).then(function(response){
+				ExercisesFactory.addExercise(this.nameexercise, this.descexercise.replace("/(?:\\r\\n|\\r|\\n)/g", '<br />'), machine).then(function(response){
 					var data = response.data;
-					$scope.exercise.updateExercices();
+					$scope.exercise.updateExercises();
 					alert("Exercice rajouté !");
 				}).catch(function(response){
 
@@ -117,6 +119,10 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 		this.wait = false;
 
 		this.notraining = false;
+
+		this.goTo = function(idtraining){
+			$location.path('/mes-entrainements/'+idtraining);
+		};
 
 		this.updateTrainings = function(){
 			TrainingsFactory.getTrainings().then(function(response){
@@ -266,6 +272,76 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 				}
 			}
 		}
+
+		this.deleteTraining = function(idtraining){
+			$event.stopPropagation();
+			if(confirm("Voulez vous supprimez cet exercice?") == true){
+				TrainingsFactory.deleteTraining(parseInt(idtraining)).then(function(response){
+					$scope.training.updateTrainings();
+				}).catch(function(response){
+					alert('Une erreur est survenue');
+				});
+			}
+		}
+	}
+]);
+
+app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", "PerformancesFactory",
+	function($scope, $routeParams, TrainingsFactory, PerformancesFactory){
+
+		this.training = {};
+		this.owner = false;
+		this.rating = 5;
+		this.rateFunction = function(rating) {
+			console.log('Rating selected: ' + rating);
+		}
+
+		this.updateTrainingId = function(){
+			TrainingsFactory.getTrainingById($routeParams.id).then(function(response){
+				var data = response.data;
+				if(data.length > 0){
+					var training = $scope.trainingid.training;
+					training.idtraining = data[0].idtraining;
+					training.nametraining = data[0].nametraining;
+					training.totaltime = data[0].totaltime;
+					training.desctraining = data[0].desctraining;
+					training.exercises = [];
+					for(var row in data){
+						var exercise = {};
+						exercise.idexercise = data[row].idexercise;
+						exercise.numero = data[row].numero;
+						exercise.nameexercise = data[row].nameexercise;
+						exercise.namemachine = data[row].namemachine;
+						exercise.last = data[row].last;
+						if(data[row].numbertimes != undefined){
+							exercise.type == 'muscu';
+							exercise.numbertimes = data[row].numbertimes;
+							exercise.numbereachtime = data[row].numbereachtime;
+						}
+						training.exercises.push(exercise);
+					}
+					training.owner = true;
+				}
+			}).catch(function(response){
+
+			});
+		};
+
+		this.updateTrainingId();
+
+		this.addPerformance = function(){
+			if(this.commentperf == undefined){
+				alert("Laisse un petit commentaire sur ta performance ;)");
+			} else {
+				PerformancesFactory.addPerformance(this.rating, this.commentperf, $routeParams.id).then(function(response){
+					alert("Performance ajoutée!");
+					$scope.trainingid.rating = 5;
+					$scope.trainingid.commentperf = undefined;
+				}).catch(function(response){
+					alert('Une erreur est survenue.');
+				});
+			}
+		};
 	}
 ]);
 

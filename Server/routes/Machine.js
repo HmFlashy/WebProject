@@ -2,7 +2,7 @@ module.exports = function(pg){
 
 	var machine = {
 		getMachines: function(req, res){
-					pg.query('SELECT * FROM  machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
+					pg.query('SELECT * FROM machine WHERE iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							return res.send(err.http_code);
 						}

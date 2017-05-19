@@ -1,60 +1,60 @@
 <section>
-
 	<h2>Vos exercices: </h2>
 	<div class="ui horizontal">
 		<div class="exercisebloc" ng-repeat="exo in exercise.exs">
-			<h3>{{ exo.nameexercise }} : </h3>
-			<p>Machine: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span></p>
-			<p>{{ exo.descexercise }}</p>
 			<i ng-click="exercise.deleteExercise(exo.idexercise)" class="remove icon"></i>
+			<h3>{{ exo.nameexercise }} :</h3>
+			<p>Machine: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span><span>Aucune</span></p>
+			<p>{{ exo.descexercise }}</p>
 		</div>
 	</div>
 </section>
 <section>
-		<form class="ui form segment" novalidate>
-			<div class="ui two column aligned center centered grid">
-				<div class="column">
-					<h2 class="ui dividing header">Ajoutez un exercice:</h2>
-					<div class="ui field input">
-						<div class="field">
-							<div class="ui field">
-								<input type="text" ng-model="exercise.nameexercise" name="nmExercice" placeholder="Nom de l'exercice" require>
+		<form class="ui form" novalidate>
+				<div class="ui two column center aligned grid">
+					<div class="column">
+						<h2 class="ui dividing header">Une nouvelle machine?</h2>
+						<div class="ui field input">
+							<div class="ui action input field">
+								<input type="text" class="ui compact" ng-model="exercise.newmachine" placeholder="Nom de la machine" name="ajoutmachine">
+								<button class="ui button" ng-click="exercise.addMachine()"><i class="plus icon"></i></button>
+						    </div>
+						</div>
+						<div style="max-height: 400px; overflow: scroll;">
+							<div ng-repeat="mch in exercise.mchs">
+								<span>{{ mch.namemachine }}</span>
+								<i class="remove icon" ng-click="exercise.deleteMachine(mch.idmachine)"></i>
 							</div>
+						</div>
+					</div>
+					<div class="column">
+						<h2 class="ui dividing header">Ajoutez un exercice:</h2>
+						<div class="ui field input">
 							<div class="field">
-								<div class="ui form">
-									<div class="field">
-										<label>Ton exercice en quelques lignes</label>
-										<textarea ng-model="exercise.descexercise"></textarea>
+								<div class="ui field">
+									<input type="text" ng-model="exercise.nameexercise" name="nmExercice" placeholder="Nom de l'exercice" require>
+								</div>
+								<div class="field">
+									<div class="ui form">
+										<div class="field">
+											<label>Ton exercice en quelques lignes</label>
+											<textarea ng-model="exercise.descexercise"></textarea>
+										</div>
 									</div>
+								</div>
+								
+								<div class="ui divider"></div>
+								<div class="ui action input field">
+										<select class="ui compact dropdown" ng-model="exercise.choixmachine" name="mach" placeholder="Nom de la machine">
+											<option value="">Aucune Machine</option>
+											<option ng-repeat="mch in exercise.mchs" value="{{ mch.idmachine }}">{{ mch.namemachine }}</option>
+										</select>
+										<button class="ui button" ng-click="exercise.addExercice()"><i class="plus icon"></i>Ajout Exercice</button>				
 								</div>
 							</div>
 							
-							<div class="ui divider"></div>
-							<div class="ui action input field">
-									<select class="ui compact dropdown" ng-model="exercise.choixmachine" name="mach" placeholder="Nom de la machine">
-										<option value="">Aucune Machine</option>
-										<option ng-repeat="mch in exercise.mchs" value="{{ mch.idmachine }}">{{ mch.namemachine }}</option>
-									</select>
-									<button class="ui button" ng-click="exercise.addExercice()"><i class="plus icon"></i>Ajout Exercice</button>				
-							</div>
 						</div>
-						
 					</div>
-				</div>
-				<div class="column">
-					<h2 class="ui dividing header">Une nouvelle machine?</h2>
-					<div class="field">
-						<div class="ui action input">
-							<input type="text" ng-model="exercise.newmachine" placeholder="Nom de la machine" name="ajoutmachine">
-							<button class="ui button" ng-click="exercise.addMachine()"><i class="plus icon"></i>Ajout Machine</button>
-					    </div>
-					</div>
-					<div ng-repeat="mch in exercise.mchs">
-						<span>{{ mch.namemachine }}</span>
-						<i class="remove icon" ng-click="exercise.deleteMachine(mch.idmachine)"></i>
-					</div>
-				</div>
-					
 				</form>
 			</div>
 		</div>

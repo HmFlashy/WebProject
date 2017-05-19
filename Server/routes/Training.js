@@ -18,7 +18,21 @@ module.exports = function(pg){
         },
         
         getTrainingById: function(req, res){
-            
+            var id = req.params.idtraining;
+            pg.query('SELECT idtraining, nametraining, desctraining, idexercise, nameexercise, numero, last, totaltime, numbertimes, numbereachtime, namemachine \
+                    FROM training \
+                    NATURAL JOIN (SELECT idtraining, sum(last) as totaltime FROM training natural join contain WHERE idtraining=$2::int GROUP BY idtraining) as b \
+                    NATURAL JOIN contain  \
+                    NATURAL JOIN exercise e\
+                    LEFT JOIN machine m ON e.idmachine = m.idmachine\
+                    WHERE e.iduser=$1::int AND idtraining=$2::int',
+                    [req.Tid , id],
+                    function(err, data){
+                        if(err){
+                            return res.send(err.http_code);
+                        }
+                        return res.status(200).json(data.rows);
+                    });
         },
         
         addTraining: function(req, res){
@@ -50,24 +64,25 @@ module.exports = function(pg){
                     if(err){
                         return res.send(err.http_code)
                     }
-                    return res.send(200);
+                    return res.status(200).send({
+                        message: "Training inserted"
+                    });
                 });
         },
         
         deleteTraining: function(req, res){
             var id = req.params.id;
-            pg.query('DELETE FROM training WHERE idtraining=$1::int CASCADE',
-                  [id],
+            pg.query('DELETE FROM training WHERE idtraining=$1::int AND iduser=$2::int',
+                  [id, req.Tid],
                   function(err, data){
                     if(err){
+                        console.log(err);
                       return res.send(err.http_code);
                     }
                     return res.status(200).send({
-                      status: true,
                       message: "Training deleted"
-                    })
+                    });
                   });
-            }
         }
     }
     return training;

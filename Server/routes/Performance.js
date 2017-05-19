@@ -56,11 +56,12 @@ var performance = {
   addPerformance: function(req, res){
             var rating = req.body.rating;
             var comment = req.body.comment;
-            var idtraining = req.body.idtraining;
+            var idtraining = req.params.idtraining;
+            console.log(rating + " " + comment + " " + idtraining);
             if(rating == undefined || comment == undefined || rating < 0 || rating > 10){
               return res.send(400);
             }
-            pg.query('INSERT INTO performance VALUES ($1::int, $2::text, $3::int, $4::int',
+            pg.query('INSERT INTO performance (dateperf, rating, comment, iduser, idtraining) VALUES (CURRENT_DATE, $1::int, $2::text, $3::int, $4::int)',
                   [rating, comment, req.Tid, idtraining],
                   function(err, data){
                     if(err){
@@ -75,8 +76,8 @@ var performance = {
 
   deletePerformance: function(req, res){
             var id = req.params.id;
-            pg.query('DELETE FROM performance WHERE idperformance=$1::int',
-                  [id],
+            pg.query('DELETE FROM performance WHERE idperformance=$1::int AND iduser=2::int',
+                  [id, req.Tid],
                   function(err, data){
                     if(err){
                       return res.send(err.http_code);
