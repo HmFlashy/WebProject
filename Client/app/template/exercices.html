@@ -4,14 +4,14 @@
 		<div class="exercisebloc" ng-repeat="exo in exercise.exs">
 			<i ng-click="exercise.deleteExercise(exo.idexercise)" class="remove icon"></i>
 			<h3>{{ exo.nameexercise }} :</h3>
-			<p>Machine: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span><span>Aucune</span></p>
+			<p>Machine: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span><span ng-if="exo.namemachine==undefined">Aucune</span></p>
 			<p>{{ exo.descexercise }}</p>
 		</div>
 	</div>
 </section>
 <section>
 		<form class="ui form" novalidate>
-				<div class="ui two column center aligned grid">
+				<div class="ui two column stackable center aligned grid">
 					<div class="column">
 						<h2 class="ui dividing header">Une nouvelle machine?</h2>
 						<div class="ui field input">
@@ -20,7 +20,7 @@
 								<button class="ui button" ng-click="exercise.addMachine()"><i class="plus icon"></i></button>
 						    </div>
 						</div>
-						<div style="max-height: 400px; overflow: scroll;">
+						<div class="ui " style="max-height: 400px; overflow: auto;">
 							<div ng-repeat="mch in exercise.mchs">
 								<span>{{ mch.namemachine }}</span>
 								<i class="remove icon" ng-click="exercise.deleteMachine(mch.idmachine)"></i>

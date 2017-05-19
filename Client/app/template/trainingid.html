@@ -6,14 +6,12 @@
 		<h2>Exercices : </h2>
 		<div style="padding: 10px;" ng-repeat="exo in trainingid.training.exercises">
 			<h4>{{ exo.numero }}. {{ exo.nameexercise }}, durée : {{ exo.last }} minutes.</h4>
-			<p style="padding-left: 15px;">Type d'exercice: <span ng-if="exo.type != 'muscu'">Cardio</span>
+			<p style="padding-left: 15px;">Type d'exercice: <span ng-if="exo.type != 'muscu'">Cardio</span><span ng-if="exo.type == 'muscu'">Musculation</span>
 								<div ng-if="exo.type == 'muscu'">
-									<span>Musculation</span>
-									<p>Nombre de séries: {{ exo.numertimes }}</p>
-									<p>Nombre par série: {{ exo.numbereachtime }}</p>
+									<p style="padding-left: 15px;">Nombre de séries: {{ exo.numbertimes }} ; Nombre par série: {{ exo.numbereachtime }}</p>
 								</div>
 			</p>
-			<p style="padding-left: 15px;">Machine utilisée: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span><span>Aucune</span></p>
+			<p style="padding-left: 15px;">Machine utilisée: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span><span ng-if="exo.namemachine==undefined">Aucune</span></p>
 		</div>
 		<div class="ui divider"></div>
 		<h2>Ajoute une performance : </h2>

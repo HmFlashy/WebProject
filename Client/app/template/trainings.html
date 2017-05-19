@@ -14,24 +14,24 @@
 <section>
 	<h2 class="ui header dividing">Nouvel entrainement: </h2>
 	<div>
-		<form class="ui form">
-			<div class="ui two columns grid">
+		<form class="ui form" novalidate>
+			<div class="ui two columns stackable center aligned grid">
 				<div class="column">
 					<h3 class="ui header dividing">Ajoute tes exercices un par un...</h3>
-					<div class="ui field input">	
-						<select class="ui dropdown" ng-change="training.typeChange()" ng-model="training.type">
+					<div class="ui two fields input">	
+						<select class="ui field dropdown" ng-change="training.typeChange()" ng-model="training.type">
 							<option value="">Type d'exercice</option>
 							<option value="0">Cardio</option>
 							<option value="1">Muscu</option>
 						</select>
-					</div>
-					<div class="field">
-						<div class="field">
-							<select type="text" ng-model="training.idexercise" name="mach">
+						<div class="ui field input">
+							<select class="ui dropdown" type="text" ng-model="training.exercisechosen" name="mach">
 								<option value="">Quel exercice?</option>
-								<option ng-repeat="exs in training.exs" value="{{ exs.idexercise }}">{{ exs.nameexercise }}</option>
+								<option ng-repeat="exs in training.exs" value="{{ exs }}">{{ exs.nameexercise }}</option>
 							</select>
 						</div>
+					</div>
+					<div class="ui field">
 						<div class="ui field labeled input">
 							<div class="ui label">
 								Durée: (minutes)
@@ -67,21 +67,21 @@
 						<textarea type="text" cols="30" rows="5" ng-model="training.desctraining" placeholder="Description" name="desctg"></textarea>
 					</div>
 					<div class="field">
-						<button class="ui button black" type="submit" ng-click="training.addTraining()">Ajouter l'entrainement<i ng-show=""this.wait" class="spinner icon"></i>
+						<button class="ui button black" type="submit" ng-click="training.addTraining()">Ajouter l'entrainement<i ng-show=""this.wait" class="spinner icon"></i></button>
 					</div>
 				</div>
 				
 			</div>
-			
-</button>
 		</form>
 	</div>
+</section>
+<section>
 	<div>
 		<div class="horizontal" ng-repeat="exercise in training.trainingExercises">
 			<p>
-				<span>Exercice n°{{ exercise.numero }} : </span>>
-				<h4>{{ exercise.nameexercise }}</s>
-				<h4>{{ exercise.last }}</h4>
+				<span>Exercice n°{{ exercise.numero }} : {{ exercise.nameexercise }}</span>
+				<p>Durée: {{ exercise.last }} minutes</p>
+				<p ng-if="exercise.numbertimes != undefined">Séries: {{ exercise.numbertimes }} x {{ exercise.numbereachtime }}</p>
 			</p>
 		</div>
 	</div>

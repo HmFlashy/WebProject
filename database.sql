@@ -16,7 +16,7 @@ CREATE TABLE Exercise (
 	iduser integer NOT NULL,
 	CONSTRAINT pk_exercise PRIMARY KEY (idExercise),
 	CONSTRAINT fk_exercise_user FOREIGN KEY (iduser) REFERENCES users (iduser) ON DELETE CASCADE,
-	CONSTRAINT fk_exercise_machine FOREIGN KEY (idmachine) REFERENCES machine (idmachine)
+	CONSTRAINT fk_exercise_machine FOREIGN KEY (idmachine) REFERENCES machine (idmachine) ON DELETE CASCADE
 );
 
 CREATE TABLE Training (

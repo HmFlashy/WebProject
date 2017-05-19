@@ -1,9 +1,12 @@
+//Controller for the home page, the lobby where we can see the last performances
 app.controller("HomeCtrl", ["$http", "$scope", 
 	function($http, $scope){
 		
 	}
 ]);
 
+
+//Controller for the header. Show the navbar and disconnect the user if he wants
 app.controller("HeaderCtrl", ["$location", "UserAuthFactory", "AuthenticationFactory",
 	function($location, UserAuthFactory, AuthenticationFactory){
 
@@ -15,6 +18,7 @@ app.controller("HeaderCtrl", ["$location", "UserAuthFactory", "AuthenticationFac
 		}
 	}
 ]);
+
 
 app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "ExercisesFactory", "MachinesFactory",
 	function($location, $http, $scope, api, ExercisesFactory, MachinesFactory){
@@ -206,45 +210,52 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 		$scope.$on('oneMoreReady', function(event){
 			if($scope.training.count == $scope.training.numero){
 				$scope.training.updateTrainings();
-				$scope.training.clearForm();
+				$scope.training.clearFormTraining();
 			} else {
 				$scope.training.count++;
 			}
 		});
 
-		this.clearForm = function(){
+		this.clearExerciseForm = function(){
 				this.isCardio = true;
 				this.type = "";
 				this.idexercise = "";
 				this.last = "";
 				this.nbseries = "";
 				this.numbereachtime = "";
+				this.wait = false;
+		};
+
+		this.clearTrainingForm = function(){
+				this.numero = 0;
+				this.trainingExercises = [];
 				this.nametraining = "";
 				this.desctraining = "";
-				this.trainingExercises = [];
-				this.wait = false;
-				this.numero = 0;
+				this.clearExerciseForm();
 		};
 
 		this.trainingExercises = [];
 		this.numero = 0;
 
 		this.addExercise = function(){
-			var idexercise = this.idexercise;
+			var jexercise = JSON.parse(this.exercisechosen);
+			var idexercise = jexercise.idexercise;
+			var nameexercise = jexercise.nameexercise; 
 			var type = this.type;
 			var time = this.last;
 			var nbSeries = undefined;
 			var nbEachSeries = undefined;
 			if(type == 1){
 				if(this.nbseries == undefined || this.nbforeachseries == undefined){
-
+					alert('Rentrez les deux champs liés aux séries');
+					return;
 				}
 				nbSeries = this.nbseries;
 				nbEachSeries = this.nbforeachseries;
 			}
 			if(idexercise == undefined || type == undefined || time == undefined || 
 			  (type == 1 && (nbSeries == undefined || nbEachSeries == undefined))){
-				this.missesthings = true;
+				alert('Il manque des informations');
 			} else {
 				this.numero++;
 				this.trainingExercises.push({
@@ -252,8 +263,10 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 					last: time,
 					numero: this.numero,
 					numbertimes: nbSeries,
-					numbereachtime: nbEachSeries
+					numbereachtime: nbEachSeries,
+					nameexercise: nameexercise
 				});
+				this.clearExerciseForm();
 			}
 
 		};
@@ -264,6 +277,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 				var nameTraining = this.nametraining;
 				var descTraining = this.desctraining;
 				if(nameTraining == undefined || descTraining == undefined){
+					alert('Il manque des informations')
 				} else {
 					TrainingsFactory.addTraining(nameTraining, descTraining).then(function(response){
 						$scope.$emit('trainingReady', response.data);
@@ -314,7 +328,7 @@ app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", 
 						exercise.namemachine = data[row].namemachine;
 						exercise.last = data[row].last;
 						if(data[row].numbertimes != undefined){
-							exercise.type == 'muscu';
+							exercise.type = 'muscu';
 							exercise.numbertimes = data[row].numbertimes;
 							exercise.numbereachtime = data[row].numbereachtime;
 						}
