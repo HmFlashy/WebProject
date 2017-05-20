@@ -1,4 +1,15 @@
-﻿
+﻿CREATE TABLE Users (
+	idUser serial,
+	firstname character varying(32) NOT NULL,
+	lastname character varying(32) NOT NULL,
+	pseudo character varying(32) NOT NULL,
+	email character varying(64) NOT NULL,
+	password character varying(64) NOT NULL,
+	CONSTRAINT pk_users PRIMARY KEY (iduser),
+	CONSTRAINT un_users UNIQUE (pseudo, email)
+);
+
+
 CREATE TABLE Machine (
 	idMachine serial,
 	nameMachine varchar(50) NOT NULL,
@@ -16,7 +27,7 @@ CREATE TABLE Exercise (
 	iduser integer NOT NULL,
 	CONSTRAINT pk_exercise PRIMARY KEY (idExercise),
 	CONSTRAINT fk_exercise_user FOREIGN KEY (iduser) REFERENCES users (iduser) ON DELETE CASCADE,
-	CONSTRAINT fk_exercise_machine FOREIGN KEY (idmachine) REFERENCES machine (idmachine) ON DELETE CASCADE
+	CONSTRAINT fk_exercise_machine FOREIGN KEY (idmachine) REFERENCES machine (idmachine) ON DELETE SET NULL
 );
 
 CREATE TABLE Training (
@@ -52,34 +63,28 @@ CREATE TABLE Contain (
 	CONSTRAINT fk_contain_exercice FOREIGN KEY (idExercise) REFERENCES Exercise (idExercise) ON DELETE CASCADE
 );
 
-
-CREATE TABLE Performance (
-	idPerformance serial,
-	rating integer NOT NULL,
-	comment varchar(256) NOT NULL,
-	iduser integer NOT NULL,
-	idtraining integer NOT NULL,
-	CONSTRAINT pk_performance PRIMARY KEY (idPerformance, iduser),
-	CONSTRAINT fk_performance_user FOREIGN KEY (iduser) REFERENCES users (iduser) ON DELETE CASCADE,
-	CONSTRAINT fk_performance_training FOREIGN KEY (idTraining) REFERENCES Training (idTraining) ON DELETE CASCADE
-);
-
-CREATE TABLE Contain (
-	idExercise integer NOT NULL,
-	idTraining integer NOT NULL,
-	numero integer NOT NULL,
-	last integer NOT NULL,
-	numberTimes integer,
-	numberEachTime integer,
-	CONSTRAINT pk_contain PRIMARY KEY (idExercice, idTraining, numero),
-	CONSTRAINT fk_contain_training FOREIGN KEY (idTraining) REFERENCES Training (idTraining) ON DELETE CASCADE,
-	CONSTRAINT fk_contain_exercice FOREIGN KEY (idExercice) REFERENCES Exercice (idExercice) ON DELETE CASCADE
-);
-
 DROP TABLE users CASCADE;
 DROP TABLE Machine CASCADE;
-DROP TABLE Exercice CASCADE;
+DROP TABLE Exercise CASCADE;
 DROP TABLE Training CASCADE;
 DROP TABLE Performance CASCADE;
 DROP TABLE Contain CASCADE;
-DROP TABLE Series CASCADE;
+
+
+
+
+CREATE OR REPLACE FUNCTION supp_empty_trainings() RETURNS trigger AS
+$BODY$
+DECLARE id integer; 
+BEGIN	
+	FOR id IN ((SELECT idTraining FROM training WHERE iduser=OLD.iduser) EXCEPT (SELECT idTraining FROM training NATURAL JOIN contain WHERE iduser= OLD.iduser))
+	LOOP
+		DELETE FROM training WHERE idtraining = id;
+	END LOOP;
+	RETURN NEW;
+END
+$BODY$ LANGUAGE plpgsql VOLATILE COST 100;
+
+CREATE TRIGGER trigg_supp_empty_trainings
+AFTER DELETE ON exercise
+    FOR EACH ROW EXECUTE PROCEDURE supp_empty_trainings();

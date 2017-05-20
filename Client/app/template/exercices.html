@@ -1,7 +1,13 @@
 <section>
-	<h2>Vos exercices: </h2>
+	<div class="ui dividing header" >
+		<h2 style="display: inline-block;">Mes exercices :</h2>
+		<div class="ui input">
+			<input style="font-size: 14px;" type="text" placeholder="Recherche" ng-model="exercise.searchtraining">
+		</div>
+	</div>
 	<div class="ui horizontal">
-		<div class="exercisebloc" ng-repeat="exo in exercise.exs">
+		<h3 style="padding: 20px;" ng-if="exercise.noexercises">Tu n'as pas d'exercices enregistrés !</h3>
+		<div ng-if="!exercise.noexercises" class="exercisebloc" ng-repeat="exo in exercise.exs | filter:{ nameexercise: exercise.searchtraining}">
 			<i ng-click="exercise.deleteExercise(exo.idexercise)" class="remove icon"></i>
 			<h3>{{ exo.nameexercise }} :</h3>
 			<p>Machine: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span><span ng-if="exo.namemachine==undefined">Aucune</span></p>

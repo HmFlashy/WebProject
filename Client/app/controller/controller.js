@@ -1,7 +1,36 @@
 //Controller for the home page, the lobby where we can see the last performances
-app.controller("HomeCtrl", ["$http", "$scope", 
-	function($http, $scope){
-		
+app.controller("HomeCtrl", ["$http", "$scope", "$location", "PerformancesFactory",
+	function($http, $scope, $location,  PerformancesFactory){
+	
+		this.performances = [];
+
+		this.updatePerformances = function(){
+			PerformancesFactory.getPerformances().then(function(response){
+				for(row in response.data){
+					$scope.home.performances.push(response.data[row]);
+					var date = new Date(response.data[row].dateperf);
+					$scope.home.performances[row].dateperf = date.toLocaleDateString("fr-FR");
+				}
+			}).catch(function(err){
+				console.log(err);
+				alert("Une erreur est survenue.")
+			});
+		}
+
+		this.updatePerformances();
+
+		this.deletePerformance = function(idperformance){
+			PerformancesFactory.deletePerformance(idperformance).then(function(response){
+				$scope.home.updatePerformances();
+			}).catch(function(respone){
+				alert("Une erreur est survenue");
+			});
+		};
+
+		this.goToTraining = function(idtraining){
+			$location.path('/mes-entrainements/'+idtraining);
+		};
+
 	}
 ]);
 
@@ -25,14 +54,16 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 
 		this.exs = [];
 		this.mchs = [];
-
+		this.noexercises = false;
 
 		this.updateExercises = function(){
 			ExercisesFactory.getExercises().then(function(response){
 				var data = response.data;
 				if(data.length == 0){
 					$scope.exercise.noexercises = true;
+					$scope.exercise.exs = [];
 				} else {
+					$scope.exercise.noexercises = false;
 					$scope.exercise.exs = data;
 				}
 			});
@@ -58,7 +89,6 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 				ExercisesFactory.deleteExercise(parseInt(idexercice)).then(function(response){
 					$scope.exercise.updateExercises();
 				}).catch(function(response){
-					console.log(response);
 					alert('Une erreur est survenue');
 				});
 			}
@@ -68,6 +98,7 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 			if(confirm("Voulez vous supprimez cette machine?\nAttention la machine disparaitra de tous vos exercices!") == true){
 				MachinesFactory.deleteMachine(parseInt(idmachine)).then(function(response){
 					$scope.exercise.updateMachines();
+					$scope.exercise.updateExercises();
 				}).catch(function(response){
 					alert("Une erreur est survenue");
 				});
@@ -122,7 +153,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 
 		this.wait = false;
 
-		this.notraining = false;
+		this.notrainings = false;
 
 		this.goTo = function(idtraining){
 			$location.path('/mes-entrainements/'+idtraining);
@@ -133,8 +164,10 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 				var data = response.data;
 				$scope.training.trainingslength = data.length;
 				if(data.length == 0){
-					$scope.training.notraining = true;
+					$scope.training.notrainings = true;
+					this.trainings = [];
 				} else {
+					$scope.training.notrainings = false;
 					var trainingsdata = [];
 					var index = -1;
 					var training = {
@@ -210,7 +243,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 		$scope.$on('oneMoreReady', function(event){
 			if($scope.training.count == $scope.training.numero){
 				$scope.training.updateTrainings();
-				$scope.training.clearFormTraining();
+				$scope.training.clearTrainingForm();
 			} else {
 				$scope.training.count++;
 			}
@@ -360,11 +393,6 @@ app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", 
 ]);
 
 app.controller("UserDataCtrl", 
-	function(){
-
-});
-
-app.controller("AgendaCtrl", 
 	function(){
 
 });

@@ -1,17 +1,28 @@
 <section>
-	<h2 class="ui dividing header">Mes entrainements : </h2>
+	<div class="ui dividing header" >
+		<h2 style="display: inline-block;">Mes entrainements :</h2>
+		<div class="ui input">
+			<input style="font-size: 14px;" type="text" placeholder="Recherche" ng-model="training.searchtraining">
+		</div>
+	</div>
+	
 	<div class="horizontal">
-		<div ng-click="training.goTo(trgs.idtraining)" class="exercisebloc" ng-repeat="trgs in training.trainings">
+		<h3 style="padding: 20px;" ng-if="training.notrainings">Tu n'as pas d'entrainements enregistrés !</h3>
+		<div ng-if="!training.notrainings" ng-click="training.goTo(trgs.idtraining)" class="exercisebloc" ng-repeat="trgs in training.trainings | filter:{ nametraining: training.searchtraining }">
 			<i ng-click="training.deleteTraining(trgs.idtraining)" class="remove icon"></i>
 			<h3>{{ trgs.nametraining }} : </h3>
 			<p>{{ trgs.totaltime }} minutes</p>
 			<p ng-repeat="(key, t) in trgs.exercises track by t.numero">
 				<span>{{ key + 1 }}: {{ t.nameexercise }}</span>
 			</p>
+			<i class="material-icons touch">touch_app</i>
 		</div>
 	</div>
 </section>
-<section>
+<section class="ui segment">
+	<div ng-if="training.wait" class="ui active dimmer">
+		<div class="ui indeterminate text loader">Preparing Files</div>
+	</div>
 	<h2 class="ui header dividing">Nouvel entrainement: </h2>
 	<div>
 		<form class="ui form" novalidate>
@@ -56,6 +67,17 @@
 					<div class="field">
 						<button class="ui button black" ng-click="training.addExercise()">Ajout d'un exercice</button>
 					</div>
+					<div class="field">
+						<h4>Exercices rajoutés à l'entrainement: </h4>
+						<p ng-if="training.trainingExercises.length == 0">Aucun exercice dans l'entrainement à ajouter</p>
+						<div class="horizontal" >
+							<div class="exercisebloc" ng-repeat="exercise in training.trainingExercises">
+									<p>Exercice n°{{ exercise.numero }} : {{ exercise.nameexercise }}</p>
+									<p>Durée: {{ exercise.last }} minutes</p>
+									<p ng-if="exercise.numbertimes != undefined">Séries: {{ exercise.numbertimes }} x {{ exercise.numbereachtime }}</p>
+							</div>
+						</div>
+					</div>
 				</div>
 				
 				<div class="column">
@@ -67,22 +89,11 @@
 						<textarea type="text" cols="30" rows="5" ng-model="training.desctraining" placeholder="Description" name="desctg"></textarea>
 					</div>
 					<div class="field">
-						<button class="ui button black" type="submit" ng-click="training.addTraining()">Ajouter l'entrainement<i ng-show=""this.wait" class="spinner icon"></i></button>
+						<button class="ui button black" type="submit" ng-click="training.addTraining()">Ajouter l'entrainement</button>
 					</div>
 				</div>
 				
 			</div>
 		</form>
-	</div>
-</section>
-<section>
-	<div>
-		<div class="horizontal" ng-repeat="exercise in training.trainingExercises">
-			<p>
-				<span>Exercice n°{{ exercise.numero }} : {{ exercise.nameexercise }}</span>
-				<p>Durée: {{ exercise.last }} minutes</p>
-				<p ng-if="exercise.numbertimes != undefined">Séries: {{ exercise.numbertimes }} x {{ exercise.numbereachtime }}</p>
-			</p>
-		</div>
 	</div>
 </section>

@@ -69,7 +69,8 @@ module.exports = function(pg){
 							  [id, req.Tid], 
 							  function(err, data) {
 									if(err) {
-										return res.send(400);
+										console.log(err);
+										return res.sendStatus(400);
 									}
 									return res.status(200).send({
 										"status" : "success",

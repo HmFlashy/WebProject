@@ -9,8 +9,9 @@ var performance = {
               [req.Tid], 
             function(err, data){
               if(err){
-                return res.send(err.http_code);
+                return res.sendStatus(err.http_code);
               }
+              console.log(data.rows);
               return res.status(200).send(data.rows);
           });
   },
@@ -27,7 +28,7 @@ var performance = {
             [req.Tid, idperformance], 
           function(err, data){
             if(err){
-              return res.send(err.http_code);
+              return res.sendStatus(err.http_code);
             }
             return res.status(200).send(data.rows);
         });
@@ -38,7 +39,7 @@ var performance = {
     var numberPerf = req.params.number;
     var offsetPerf = req.params.offset;
     if(numberPerf == undefined){
-      return res.send(400);
+      return res.sendStatus(400);
     }
     pg.query('SELECT p.*, idtraining, nametraining  \
           FROM performance p \
@@ -47,7 +48,7 @@ var performance = {
             [req.Tid, idperformance, offsetPerf], 
           function(err, data){
             if(err){
-              return res.send(err.http_code);
+              return res.sendStatus(err.http_code);
             }
             return res.status(200).send(data.rows);
         });
@@ -57,18 +58,16 @@ var performance = {
             var rating = req.body.rating;
             var comment = req.body.comment;
             var idtraining = req.params.idtraining;
-            console.log(rating + " " + comment + " " + idtraining);
             if(rating == undefined || comment == undefined || rating < 0 || rating > 10){
-              return res.send(400);
+              return res.sendStatus(400);
             }
             pg.query('INSERT INTO performance (dateperf, rating, comment, iduser, idtraining) VALUES (CURRENT_DATE, $1::int, $2::text, $3::int, $4::int)',
                   [rating, comment, req.Tid, idtraining],
                   function(err, data){
                     if(err){
-                      return res.send(err.http_code);
+                      return res.sendStatus(err.http_code);
                     }
                     return res.status(200).send({
-                      status: true,
                       message: "Performance added"
                     })
                   });
@@ -80,7 +79,7 @@ var performance = {
                   [id, req.Tid],
                   function(err, data){
                     if(err){
-                      return res.send(err.http_code);
+                      return res.sendStatus(err.http_code);
                     }
                     return res.status(200).send({
                       status: true,

@@ -6,11 +6,11 @@
 html, body
 {
 	width: 100%;
+	height: 100%;
 	background-image: url(../images/salleMuscu.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-
 h3
 {
 	margin-top:5px;
@@ -63,12 +63,12 @@ section
 	resize: true;
 }
 
-.exercisebloc
+.exercisebloc, .performancebloc
 {
 
   	position: relative;
 	padding: 18px;
-	background-color: rgba(255, 0, 0, 0.3);
+	background-color: rgba(255, 128, 0, 1);
 	border-radius: 1px;
 	margin: 5px;
 	width: auto;
@@ -82,13 +82,27 @@ section
 
 }
 
-.exercisebloc:hover
+
+
+.exercisebloc:hover, .performancebloc:hover
 {
   box-shadow: 0 0 10px 6px rgba(0,0,0,0.3) ;
 
 }
 
-#subHead
+.performancebloc
+{
+	height: 250px;
+}
+
+.touch 
+{
+	position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#subHead, #footer
 {
 	padding: 0px;
 	text-align: center;
@@ -112,12 +126,40 @@ section
     right: 0px;
 }
 
+.trainingname
+{
+	text-shadow: 0px 0px 3px #ff0000;
+	transition: text-shadow 0.5s;
+}
+
+.trainingname i
+{
+	visibility: hidden;
+}
+
+.trainingname:hover
+{
+	text-shadow: 1px 1px 5px #ff0000;
+}
+
+.trainingname:hover i
+{
+	visibility: visible;
+}
+
+
 @media (max-width: 768px)
 {
 	#header *
 	{
 		padding: 0px;
 		text-align: center;
+		font-size: 10px;
+	}
+
+	.bigTitle
+	{
+		font-size: 30px;
 	}
 
 	.myForm
@@ -125,12 +167,6 @@ section
 		width: inherit;
 	}
 }
-
-@media (min-width: 1281px)
-{
-
-}
-
 
 ::-webkit-scrollbar
 {

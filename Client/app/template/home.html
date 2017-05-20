@@ -1,8 +1,15 @@
-<section id="home">
-	<h2>Vos dernières performances: </h2>
-	<div>
-		<div ng-repeat="perf in perfomances">
-		{{ perf.dateperf }}
+<section>
+	<h2 class="ui dividing header">Mes dernières performances: </h2>
+	<div class="horizontal">
+		<div class="performancebloc" ng-repeat="perf in home.performances | orderBy: '-dateperf'">
+			<h3>Entrainement: <span class="trainingname" ng-click="home.goToTraining(perf.idtraining)">{{ perf.nametraining }}<i class="material-icons">touch_app</i></span></h3>
+			<p>Note: <jk-rating-stars max-rating="10" read-only="perf.rating" rating="perf.rating" ></jk-rating-stars></p>
+			<p>Fait le: {{ perf. dateperf}}</p>
+			<h4>Commentaires: </h4>
+			<p>{{ perf.comment }}</p>
 		</div>
 	</div>	
+</section>
+<section>
+	<h2 class="ui dividing header">Quelques statistiques :</h2>
 </section>
