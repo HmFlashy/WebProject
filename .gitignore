@@ -116,3 +116,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# ftp config
+.ftpconfig
