@@ -5,11 +5,11 @@
 			<input style="font-size: 14px;" type="text" placeholder="Recherche" ng-model="training.searchtraining">
 		</div>
 	</div>
-	
+
 	<div class="horizontal">
-		<h3 style="padding: 20px;" ng-if="training.notrainings">Tu n'as pas d'entrainements enregistrés !</h3>
+		<div class="nodata" ng-if="training.notrainings">Tu n'as pas d'entrainements enregistrés !</div>
 		<div ng-if="!training.notrainings" ng-click="training.goTo(trgs.idtraining)" class="exercisebloc" ng-repeat="trgs in training.trainings | filter:{ nametraining: training.searchtraining }">
-			<i ng-click="training.deleteTraining(trgs.idtraining)" class="remove icon"></i>
+			<i ng-click="training.deleteTraining(trgs.idtraining); $event.stopPropagation();" class="remove icon"></i>
 			<h3>{{ trgs.nametraining }} : </h3>
 			<p>{{ trgs.totaltime }} minutes</p>
 			<p ng-repeat="(key, t) in trgs.exercises track by t.numero">
@@ -28,10 +28,10 @@
 		<form class="ui form" novalidate>
 			<div class="ui two columns stackable center aligned grid">
 				<div class="column">
-					<h3 class="ui header dividing">Ajoute tes exercices un par un...</h3>
-					<div class="ui two fields input">	
+					<h3 class="ui header dividing">Ajoute tes activités une par une ...</h3>
+					<div class="ui two fields input">
 						<select class="ui field dropdown" ng-change="training.typeChange()" ng-model="training.type">
-							<option value="">Type d'exercice</option>
+							<option value="">Type d'activité</option>
 							<option value="0">Cardio</option>
 							<option value="1">Muscu</option>
 						</select>
@@ -59,7 +59,7 @@
 							<div class="ui field labeled input">
 								<div class="ui label">
 									Nb par série:
-								</div> 
+								</div>
 								<input type="number" placeholder="Séries de combien?" ng-model="training.nbforeachseries" ng-show="!training.isCardio" name="nbforeachseries">
 							</div>
 						</div>
@@ -79,9 +79,9 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="column">
-					<h3 class="ui header dividing">Tes exercices sont prets?</h3>
+					<h3 class="ui header dividing">... puis nomme ton entrainement</h3>
 					<div class="field">
 						<input type="text" ng-model="training.nametraining" placeholder="Nom de l'entrainement" name="nametg">
 					</div>
@@ -92,7 +92,7 @@
 						<button class="ui button black" type="submit" ng-click="training.addTraining()">Ajouter l'entrainement</button>
 					</div>
 				</div>
-				
+
 			</div>
 		</form>
 	</div>

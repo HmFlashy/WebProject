@@ -1,3 +1,5 @@
+//Routes for the machines requests
+
 module.exports = function(pg){
 
 	var machine = {
@@ -28,8 +30,8 @@ module.exports = function(pg){
 					if(machineName == undefined){
 						return res.send(400);
 					}
-					pg.query("INSERT INTO machine (namemachine, iduser) VALUES ($1::text, $2::int) RETURNING *", 
-						      [machineName, req.Tid], 
+					pg.query("INSERT INTO machine (namemachine, iduser) VALUES ($1::text, $2::int) RETURNING *",
+						      [machineName, req.Tid],
 						      function(err, data) {
 									if(err) {
 										return res.send(err.http_code);
@@ -44,15 +46,15 @@ module.exports = function(pg){
 					if(id == undefined || description == undefined || exerciceName == undefined){
 						res.send(400);
 					}
-					pg.query('UPDATE machine SET namemachine=$1::text WHERE idmachine=$2::int AND iduser=3::int', 
-							  [machineName, id, req.Tid], 
+					pg.query('UPDATE machine SET namemachine=$1::text WHERE idmachine=$2::int AND iduser=3::int',
+							  [machineName, id, req.Tid],
 							  function(err, data) {
 									if(err) {
 										return res.send(err.http_code);
 									}
 									return res.status(200).send("Machine " + machineName + " updated");
 								});
-					
+
 				},
 
 		deleteMachine: function(req, res){
@@ -60,8 +62,8 @@ module.exports = function(pg){
 					if(id == undefined){
 						return res.send(400);
 					}
-					pg.query('DELETE FROM machine WHERE idmachine=$1::int AND iduser=$2::int', 
-							  [id, req.Tid], 
+					pg.query('DELETE FROM machine WHERE idmachine=$1::int AND iduser=$2::int',
+							  [id, req.Tid],
 							  function(err, data) {
 									if(err) {
 										return res.send(err.http_code);

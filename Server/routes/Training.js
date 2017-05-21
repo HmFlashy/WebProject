@@ -1,5 +1,8 @@
+//Routes for the trainings requests
+
 module.exports = function(pg){
-    
+
+
     var training = {
         getTrainings: function(req, res){
             pg.query('SELECT idtraining, nametraining, desctraining, idexercise, nameexercise, numero, totaltime \
@@ -7,8 +10,9 @@ module.exports = function(pg){
                     NATURAL JOIN (SELECT idtraining, sum(last) as totaltime FROM training natural join contain GROUP BY idtraining) as b \
                     NATURAL JOIN contain  \
                     NATURAL JOIN exercise \
-                    WHERE iduser=$1::int',
-                      [req.Tid], 
+                    WHERE iduser=$1::int \
+                    ORDER BY idtraining, numero, nametraining, desctraining, idexercise, nameexercise, totaltime ',
+                      [req.Tid],
                     function(err, data){
                       if(err){
                         return res.sendStatus(err.http_code);
@@ -16,7 +20,7 @@ module.exports = function(pg){
                       return res.status(200).json(data.rows);
                   });
         },
-        
+
         getTrainingById: function(req, res){
             var id = req.params.idtraining;
             if(id == undefined){
@@ -28,7 +32,8 @@ module.exports = function(pg){
                     NATURAL JOIN contain  \
                     NATURAL JOIN exercise e\
                     LEFT JOIN machine m ON e.idmachine = m.idmachine\
-                    WHERE e.iduser=$1::int AND idtraining=$2::int',
+                    WHERE e.iduser=$1::int AND idtraining=$2::int \
+                    ORDER BY idtraining, numero, nametraining, desctraining, idexercise, nameexercise, last, totaltime, numbertimes, numbereachtime, namemachine ',
                     [req.Tid , id],
                     function(err, data){
                         if(err){
@@ -37,7 +42,7 @@ module.exports = function(pg){
                         return res.status(200).json(data.rows);
                     });
         },
-        
+
         addTraining: function(req, res){
             var nametraining = req.body.nameMach;
             var desctraining = req.body.descMach;
@@ -72,7 +77,7 @@ module.exports = function(pg){
                     });
                 });
         },
-        
+
         deleteTraining: function(req, res){
             var id = req.params.id;
             pg.query('DELETE FROM training WHERE idtraining=$1::int AND iduser=$2::int',

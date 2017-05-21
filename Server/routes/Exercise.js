@@ -1,3 +1,5 @@
+//Routes for the exercises requests
+
 module.exports = function(pg){
 
 	var exercise = {
@@ -31,8 +33,8 @@ module.exports = function(pg){
 					if(description == undefined || exerciseName == undefined){
 						return res.send(400);
 					}
-					pg.query("INSERT INTO exercise (nameexercise, descexercise, idmachine, iduser) VALUES ($1::text,$2::text, $3::int, $4::int) RETURNING *", 
-						      [exerciseName, description, idmachine, req.Tid], 
+					pg.query("INSERT INTO exercise (nameexercise, descexercise, idmachine, iduser) VALUES ($1::text,$2::text, $3::int, $4::int) RETURNING *",
+						      [exerciseName, description, idmachine, req.Tid],
 						      function(err, data) {
 									if(err) {
 										console.log(err);
@@ -49,15 +51,15 @@ module.exports = function(pg){
 					if(id == undefined || description == undefined || exerciseName == undefined){
 						return res.send(400);
 					}
-					pg.query('UPDATE exercise SET iduser=$1::int, idexercise=$2::int, idmachine=$3::int, nameexercise=$4::text, descexercise=$5::text', 
-						[req.Tid, idexercise, idmachine, exerciseName, description], 
+					pg.query('UPDATE exercise SET iduser=$1::int, idexercise=$2::int, idmachine=$3::int, nameexercise=$4::text, descexercise=$5::text',
+						[req.Tid, idexercise, idmachine, exerciseName, description],
 							  function(err, data) {
 									if(err) {
 										return res.send(err.http_code);
 									}
 									return res.status(200).send("Machine " + machineName + " updated");
 								});
-					
+
 				},
 
 		deleteExercise: function(req, res){
@@ -65,8 +67,8 @@ module.exports = function(pg){
 					if(id == undefined){
 						return res.send(400);
 					}
-					pg.query('DELETE FROM exercise WHERE idexercise=$1::int AND iduser=$2::int', 
-							  [id, req.Tid], 
+					pg.query('DELETE FROM exercise WHERE idexercise=$1::int AND iduser=$2::int',
+							  [id, req.Tid],
 							  function(err, data) {
 									if(err) {
 										console.log(err);

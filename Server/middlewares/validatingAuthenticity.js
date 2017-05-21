@@ -1,4 +1,6 @@
-module.exports = function(pg){	
+//Validate the authenticity of a users thanks to his token
+
+module.exports = function(pg){
 
 	var jwt = require('jsonwebtoken');
 	return function(req, res, next){

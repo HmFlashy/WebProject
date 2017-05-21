@@ -1,15 +1,20 @@
 //Controller for the home page, the lobby where we can see the last performances
 app.controller("HomeCtrl", ["$http", "$scope", "$location", "PerformancesFactory",
 	function($http, $scope, $location,  PerformancesFactory){
-	
+
 		this.performances = [];
+		this.noperformances = false;
 
 		this.updatePerformances = function(){
 			PerformancesFactory.getPerformances().then(function(response){
-				for(row in response.data){
-					$scope.home.performances.push(response.data[row]);
-					var date = new Date(response.data[row].dateperf);
-					$scope.home.performances[row].dateperf = date.toLocaleDateString("fr-FR");
+				if(response.data.length == 0){
+					this.noperformances = true;
+				} else {
+					for(row in response.data){
+						$scope.home.performances.push(response.data[row]);
+						var date = new Date(response.data[row].dateperf);
+						$scope.home.performances[row].dateperf = date.toLocaleDateString("fr-FR");
+					}
 				}
 			}).catch(function(err){
 				console.log(err);
@@ -273,7 +278,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 		this.addExercise = function(){
 			var jexercise = JSON.parse(this.exercisechosen);
 			var idexercise = jexercise.idexercise;
-			var nameexercise = jexercise.nameexercise; 
+			var nameexercise = jexercise.nameexercise;
 			var type = this.type;
 			var time = this.last;
 			var nbSeries = undefined;
@@ -286,7 +291,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 				nbSeries = this.nbseries;
 				nbEachSeries = this.nbforeachseries;
 			}
-			if(idexercise == undefined || type == undefined || time == undefined || 
+			if(idexercise == undefined || type == undefined || time == undefined ||
 			  (type == 1 && (nbSeries == undefined || nbEachSeries == undefined))){
 				alert('Il manque des informations');
 			} else {
@@ -306,12 +311,12 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 
 		this.addTraining = function(){
 			if(this.wait == false){
-				this.wait = true;
 				var nameTraining = this.nametraining;
 				var descTraining = this.desctraining;
 				if(nameTraining == undefined || descTraining == undefined){
 					alert('Il manque des informations')
 				} else {
+					this.wait = true;
 					TrainingsFactory.addTraining(nameTraining, descTraining).then(function(response){
 						$scope.$emit('trainingReady', response.data);
 					}).catch(function(){
@@ -321,8 +326,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 		}
 
 		this.deleteTraining = function(idtraining){
-			$event.stopPropagation();
-			if(confirm("Voulez vous supprimez cet exercice?") == true){
+			if(confirm("Voulez vous supprimez cet entrainement?") == true){
 				TrainingsFactory.deleteTraining(parseInt(idtraining)).then(function(response){
 					$scope.training.updateTrainings();
 				}).catch(function(response){
@@ -392,7 +396,7 @@ app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", 
 	}
 ]);
 
-app.controller("UserDataCtrl", 
+app.controller("UserDataCtrl",
 	function(){
 
 });

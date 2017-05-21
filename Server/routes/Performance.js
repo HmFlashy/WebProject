@@ -1,3 +1,5 @@
+//Routes for the performances requests
+
 module.exports = function(pg){
 
 var performance = {
@@ -6,12 +8,11 @@ var performance = {
             FROM performance \
             NATURAL JOIN training \
             WHERE iduser=$1::int',
-              [req.Tid], 
+              [req.Tid],
             function(err, data){
               if(err){
                 return res.sendStatus(err.http_code);
               }
-              console.log(data.rows);
               return res.status(200).send(data.rows);
           });
   },
@@ -25,7 +26,7 @@ var performance = {
           FROM performance p \
           NATURAL JOIN training\
           WHERE iduser=$1::int AND idperformance=$2::int',
-            [req.Tid, idperformance], 
+            [req.Tid, idperformance],
           function(err, data){
             if(err){
               return res.sendStatus(err.http_code);
@@ -45,7 +46,7 @@ var performance = {
           FROM performance p \
           NATURAL JOIN training\
           WHERE iduser=$1::int LIMIT $3::int OFFSET $4::int',
-            [req.Tid, idperformance, offsetPerf], 
+            [req.Tid, idperformance, offsetPerf],
           function(err, data){
             if(err){
               return res.sendStatus(err.http_code);

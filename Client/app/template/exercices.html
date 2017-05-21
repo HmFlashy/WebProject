@@ -6,7 +6,7 @@
 		</div>
 	</div>
 	<div class="ui horizontal">
-		<h3 style="padding: 20px;" ng-if="exercise.noexercises">Tu n'as pas d'exercices enregistrés !</h3>
+		<div class="nodata" ng-if="exercise.noexercises">Tu n'as pas d'exercices enregistrés !</div>
 		<div ng-if="!exercise.noexercises" class="exercisebloc" ng-repeat="exo in exercise.exs | filter:{ nameexercise: exercise.searchtraining}">
 			<i ng-click="exercise.deleteExercise(exo.idexercise)" class="remove icon"></i>
 			<h3>{{ exo.nameexercise }} :</h3>
@@ -37,28 +37,32 @@
 						<h2 class="ui dividing header">Ajoutez un exercice:</h2>
 						<div class="ui field input">
 							<div class="field">
-								<div class="ui field">
-									<input type="text" ng-model="exercise.nameexercise" name="nmExercice" placeholder="Nom de l'exercice" require>
+								<div class="ui two fields">
+								<div class="field">
+									<select class="ui compact dropdown" ng-model="exercise.choixmachine" name="mach" placeholder="Nom de la machine">
+										<option value="">Aucune Machine</option>
+										<option ng-repeat="mch in exercise.mchs" value="{{ mch.idmachine }}">{{ mch.namemachine }}</option>
+										</select>
+								</div>
+									<div class="field">
+										<input type="text" ng-model="exercise.nameexercise" name="nmExercice" placeholder="Nom de l'exercice" require>
+									</div>
 								</div>
 								<div class="field">
 									<div class="ui form">
 										<div class="field">
 											<label>Ton exercice en quelques lignes</label>
-											<textarea ng-model="exercise.descexercise"></textarea>
+											<textarea rows="1" ng-model="exercise.descexercise"></textarea>
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="ui divider"></div>
-								<div class="ui action input field">
-										<select class="ui compact dropdown" ng-model="exercise.choixmachine" name="mach" placeholder="Nom de la machine">
-											<option value="">Aucune Machine</option>
-											<option ng-repeat="mch in exercise.mchs" value="{{ mch.idmachine }}">{{ mch.namemachine }}</option>
-										</select>
-										<button class="ui button" ng-click="exercise.addExercice()"><i class="plus icon"></i>Ajout Exercice</button>				
+								<div class="ui input field">
+										<button class="ui button" ng-click="exercise.addExercice()"><i class="plus icon"></i>Ajout Exercice</button>
 								</div>
 							</div>
-							
+
 						</div>
 					</div>
 				</form>

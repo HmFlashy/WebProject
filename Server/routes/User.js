@@ -1,3 +1,5 @@
+//Routes for all the users requests
+
 module.exports = function(pg){
 
 	var user = {
@@ -15,12 +17,12 @@ module.exports = function(pg){
 				},
 
 		updateUser: function(req, res){
-					
+
 					var id = req.body.nameMach;
 					var description = req.body.descMachine;
 					var id = req.params.id;
-					pg.query('UPDATE Machine SET machineName=$1::string, description=$2::string WHERE idMachine=$3::int', 
-							  [machineName, description, id], 
+					pg.query('UPDATE Machine SET machineName=$1::string, description=$2::string WHERE idMachine=$3::int',
+							  [machineName, description, id],
 							  function(err, data) {
 									if(err) {
 										return res.send(err.http_code);
@@ -31,8 +33,8 @@ module.exports = function(pg){
 
 		deleteMachine: function(req, res){
 					var id = req.params.id;
-					pg.query('DELETE FROM Machine WHERE idMachine=$1::int', 
-							  [id], 
+					pg.query('DELETE FROM Machine WHERE idMachine=$1::int',
+							  [id],
 							  function(err, data) {
 									if(err) {
 										return res.send(err.http_code);
