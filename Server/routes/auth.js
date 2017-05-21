@@ -1,3 +1,5 @@
+//Routes for the authentification and register requests
+
 module.exports = function(pg){
 
 	var jwt = require('jsonwebtoken');
@@ -7,7 +9,7 @@ module.exports = function(pg){
 	var auth = {
 		authenticate: function(req, res) {
 							var login;
-							var password;	
+							var password;
 							if(req.body.login == undefined || req.body.password == undefined){
 								res.status(401);
 					            return res.json({
@@ -18,7 +20,7 @@ module.exports = function(pg){
 							login = req.body.login.toLowerCase();
 							password = req.body.password;
 							pg.query("SELECT * FROM users WHERE lower(pseudo)=$1::text OR email=$1::text",
-									  [login], 
+									  [login],
 									  function(err, user) {
 
 										if (err) {
@@ -30,13 +32,13 @@ module.exports = function(pg){
 								                "message": "User does not exist"
 								            });
 										} else if (user) {
-											bcrypt.compare(password, user.rows[0].password, function(err, data) {											    
+											bcrypt.compare(password, user.rows[0].password, function(err, data) {
 											    if(data == false){
 											    	res.status(401);
 										            return res.json({
 										                "status": 401,
 										                "message": "Invalid credentials"
-										            });    
+										            });
 												}
 												// if user is found and password is right
 												// create a token
@@ -77,11 +79,11 @@ module.exports = function(pg){
 								    		  [firstname,lastname, pseudo, email, hash], function(err, user){
 								    		  	if(err){
 													return res.send(err.http_code);
-								    		  	}	
+								    		  	}
 								    		  	return res.status(201).json({ success: true, message: 'User added.', "pseudo": pseudo});
 								    		  });
 								});
-							}).catch(function(err){ 
+							}).catch(function(err){
 										err = 'message: {' + err + '}';
 										var e = JSON.parse(err);
 										return res.status(400).send({
@@ -89,7 +91,7 @@ module.exports = function(pg){
 											messages: e
 										});
 									});
-								
+
 						}
 					}
 

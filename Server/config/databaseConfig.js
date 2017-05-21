@@ -1,3 +1,5 @@
+//Config for the database
+
 var config = {
   user: 'wbtbldxuwrtejb', //env var: PGUSER
   database: 'dabj3churog5bd', //env var: PGDATABASE
