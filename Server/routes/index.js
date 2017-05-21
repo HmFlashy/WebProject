@@ -19,7 +19,6 @@ module.exports = function(pg){
 	router.get('/api/machines', machine.getMachines);
 	router.get('/api/machines/:id', machine.getMachineById);
 	router.post('/api/machines', machine.addMachine);
-	router.put('/api/machines/:id', machine.updateMachine);
 	router.delete('/api/machines/:id', machine.deleteMachine);
 
 	//Exercises

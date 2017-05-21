@@ -1,4 +1,4 @@
-﻿CREATE TABLE Users (
+CREATE TABLE Users (
 	idUser serial,
 	firstname character varying(32) NOT NULL,
 	lastname character varying(32) NOT NULL,
@@ -75,9 +75,11 @@ DROP TABLE Contain CASCADE;
 
 CREATE OR REPLACE FUNCTION supp_empty_trainings() RETURNS trigger AS
 $BODY$
-DECLARE id integer; 
-BEGIN	
-	FOR id IN ((SELECT idTraining FROM training WHERE iduser=OLD.iduser) EXCEPT (SELECT idTraining FROM training NATURAL JOIN contain WHERE iduser= OLD.iduser))
+DECLARE id integer;
+BEGIN
+	FOR id IN ((SELECT idTraining FROM training WHERE iduser=OLD.iduser)
+								EXCEPT
+						 (SELECT idTraining FROM training NATURAL JOIN contain WHERE iduser= OLD.iduser))
 	LOOP
 		DELETE FROM training WHERE idtraining = id;
 	END LOOP;
