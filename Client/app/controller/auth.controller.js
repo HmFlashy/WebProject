@@ -10,7 +10,7 @@ app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory'
 		    var password = this.pwd;
 		    if (log !== undefined && password !== undefined) {
 		    	UserAuthFactory.login(log, password).then(function(response) {
-		       
+
 					var data = response.data;
 					AuthenticationFactory.isLogged = true;
 					AuthenticationFactory.user = data.name;
@@ -32,11 +32,11 @@ app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory'
 		      } else {
 		      	alert("Des informations sont manquantes");
 		     }
-	 
+
 	    };
 	}]);
 
-app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory", "AuthenticationFactory", 
+app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory", "AuthenticationFactory",
 	function($scope, $http, $location, UserAuthFactory, AuthenticationFactory){
 
 		this.login = function(){

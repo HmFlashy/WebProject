@@ -1,7 +1,7 @@
 <section>
 	<h2 class="ui dividing header">Mes dernières performances: </h2>
 	<div class="horizontal">
-		<div class="nodata" ng-if="home.performances">Aucune performance enregistrée ! </div>
+		<div class="nodata" ng-if="home.performances.length == 0">Aucune performance enregistrée ! </div>
 		<div ng-if="!home.noperformances" class="performancebloc" ng-repeat="perf in home.performances | orderBy: '-dateperf'">
 			<h3>Entrainement: <span class="trainingname" ng-click="home.goToTraining(perf.idtraining)">{{ perf.nametraining }}<i class="material-icons">touch_app</i></span></h3>
 			<p>Note: <jk-rating-stars max-rating="10" read-only="perf.rating" rating="perf.rating" ></jk-rating-stars></p>
@@ -14,9 +14,9 @@
 <section>
 	<h2 class="ui dividing header">Quelques statistiques :</h2>
 	<div class="ui">
-		<p>Vous avez fait TODO séances dans le mois</p>
-		<p>Vous avez fais TODO séances depuis votre inscription</p>
-		<p>Vous vous entrainez le plus souvent sur l'entrainement: TODO</p>
-		<p>Vos peformances ont une moyenn de TODO / 10</p>
+		<p>Vous avez fait {{ home.totalperfsmonth }} séances dans le mois</p>
+		<p>Vous avez fais {{ home.totalperformances }} séances depuis votre inscription</p>
+		<p>Vous vous entrainez le plus souvent sur l'entrainement: {{ home.besttraining }}</p>
+		<p>Vos peformances ont une moyenne de {{ home.averagerating }} / 10</p>
 	</div>
 </section>

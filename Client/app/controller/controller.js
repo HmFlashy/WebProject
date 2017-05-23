@@ -10,6 +10,7 @@ app.controller("HomeCtrl", ["$http", "$scope", "$location", "PerformancesFactory
 				if(response.data.length == 0){
 					this.noperformances = true;
 				} else {
+					$scope.home.totalperformances = response.data.length;
 					for(row in response.data){
 						$scope.home.performances.push(response.data[row]);
 						var date = new Date(response.data[row].dateperf);
@@ -20,9 +21,26 @@ app.controller("HomeCtrl", ["$http", "$scope", "$location", "PerformancesFactory
 				console.log(err);
 				alert("Une erreur est survenue.")
 			});
-		}
+		};
+
+		this.updateStatistiques = function(){
+			PerformancesFactory.getStatistiques().then(function(response){
+				if(response.data.length == 0){
+					$scope.home.noperformances = true;
+				} else {
+					var row = response.data[0];
+					$scope.home.totalperfsmonth = row.totalperformancesmonth;
+					$scope.home.averagerating = Math.round(row.averagerating*100)/100;
+					$scope.home.besttraining = row.nametraining;
+					$scope.home.numberperfstraining = row.nbperformances;
+				}
+			}).catch(function(response){
+					console.log("erreur");
+			});
+		};
 
 		this.updatePerformances();
+		this.updateStatistiques();
 
 		this.deletePerformance = function(idperformance){
 			PerformancesFactory.deletePerformance(idperformance).then(function(response){
@@ -148,7 +166,7 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 	}
 ]);
 
-
+//Controller for the trainings page
 app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "ExercisesFactory",
 	function($scope, $location, TrainingsFactory, ExercisesFactory){
 
@@ -164,6 +182,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 			$location.path('/mes-entrainements/'+idtraining);
 		};
 
+		//Update the trainings
 		this.updateTrainings = function(){
 			TrainingsFactory.getTrainings().then(function(response){
 				var data = response.data;
@@ -182,7 +201,11 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 						"desctraining": undefined,
 						"exercises": []
 					};
+					//If there are trainings, I join the exercises that are connected to each training
+					// For each row I keep the training informations and add to these information an array of exercises
 					for(var row in data){
+						//If the training id is different, we push a new training to the array trainings
+						// and do the calculations again for this new training
 						if(data[row].idtraining != index){
 							if(index != -1){
 								var newtraining = JSON.parse(JSON.stringify(training));;
@@ -232,6 +255,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 			}
 		};
 
+		// This event permit to update the trainings only when all the exercises have been added to the database
 		$scope.$on('trainingReady', function(event, training){
 			var i = 0;
 			for(i = 0; i < $scope.training.trainingExercises.length; i++){
@@ -239,11 +263,13 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 					function(respone){
 						$scope.$emit('oneMoreReady');
 					}).catch(function(response){
+						this.wait = false;
 						alert('Une erreur est survenue..\nVeuillez supprimer l\'entrainement et recommencer)');
 					});
 			}
 		});
 
+		//This event is called when a exercise is added to the database
 		this.count = 1;
 		$scope.$on('oneMoreReady', function(event){
 			if($scope.training.count == $scope.training.numero){
@@ -261,10 +287,10 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 				this.last = "";
 				this.nbseries = "";
 				this.numbereachtime = "";
-				this.wait = false;
 		};
 
 		this.clearTrainingForm = function(){
+				this.wait = false;
 				this.numero = 0;
 				this.trainingExercises = [];
 				this.nametraining = "";
@@ -337,6 +363,8 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 	}
 ]);
 
+
+//Controller for the training page that display all the informations for one training
 app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", "PerformancesFactory",
 	function($scope, $routeParams, TrainingsFactory, PerformancesFactory){
 
@@ -396,7 +424,10 @@ app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", 
 	}
 ]);
 
-app.controller("UserDataCtrl",
-	function(){
 
-});
+//Controller for the data page, where the user can see his datas
+app.controller("UserDataCtrl", ["UsersFactory",
+	function(UsersFactory){
+
+	}
+]);

@@ -22,7 +22,7 @@
 						<h2 class="ui dividing header">Une nouvelle machine?</h2>
 						<div class="ui field input">
 							<div class="ui action input field">
-								<input type="text" class="ui compact" ng-model="exercise.newmachine" placeholder="Nom de la machine" name="ajoutmachine">
+								<input type="text" maxlength="20" class="ui compact" ng-model="exercise.newmachine" placeholder="Nom de la machine" name="ajoutmachine">
 								<button class="ui button" ng-click="exercise.addMachine()"><i class="plus icon"></i></button>
 						    </div>
 						</div>
@@ -39,13 +39,13 @@
 							<div class="field">
 								<div class="ui two fields">
 								<div class="field">
-									<select class="ui compact dropdown" ng-model="exercise.choixmachine" name="mach" placeholder="Nom de la machine">
+									<select class="ui compact dropdown" ng-model="exercise.choixmachine" name="mach">
 										<option value="">Aucune Machine</option>
 										<option ng-repeat="mch in exercise.mchs" value="{{ mch.idmachine }}">{{ mch.namemachine }}</option>
 										</select>
 								</div>
 									<div class="field">
-										<input type="text" ng-model="exercise.nameexercise" name="nmExercice" placeholder="Nom de l'exercice" require>
+										<input type="text" maxlength="128" ng-model="exercise.nameexercise" name="nmExercice" placeholder="Nom de l'exercice" require>
 									</div>
 								</div>
 								<div class="field">

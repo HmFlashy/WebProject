@@ -1,4 +1,4 @@
-app.factory('ExercisesFactory', ['$http', 'api', 
+app.factory('ExercisesFactory', ['$http', 'api',
 	function($http, api){
 
 		return {
@@ -39,7 +39,7 @@ app.factory('MachinesFactory', ['$http', 'api', function($http, api){
 	};
 }]);
 
-app.factory('TrainingsFactory', ['$http', 'api', 
+app.factory('TrainingsFactory', ['$http', 'api',
 	function($http, api){
 		return {
 			addTraining: function(nametraining, desctraining){
@@ -72,7 +72,7 @@ app.factory('TrainingsFactory', ['$http', 'api',
 		};
 }]);
 
-app.factory('PerformancesFactory', ['$http', 'api', 
+app.factory('PerformancesFactory', ['$http', 'api',
 	function($http, api){
 
 		return {
@@ -90,6 +90,15 @@ app.factory('PerformancesFactory', ['$http', 'api',
 
 			deletePerformance: function(idperformance){
 				return $http.delete(api + '/api/performances/'+idperformance);
+			},
+
+			getStatistiques: function(){
+				return $http.get(api + '/api/performances/statistiques')
 			}
 		}
-	}])
+	}]);
+
+app.factory('UsersFactory', [
+	function(){
+
+}]);

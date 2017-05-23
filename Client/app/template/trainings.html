@@ -83,10 +83,10 @@
 				<div class="column">
 					<h3 class="ui header dividing">... puis nomme ton entrainement</h3>
 					<div class="field">
-						<input type="text" ng-model="training.nametraining" placeholder="Nom de l'entrainement" name="nametg">
+						<input type="text" maxlength="20" ng-model="training.nametraining" placeholder="Nom de l'entrainement" name="nametg">
 					</div>
 					<div class="field">
-						<textarea type="text" cols="30" rows="5" ng-model="training.desctraining" placeholder="Description" name="desctg"></textarea>
+						<textarea type="text" maxlength="128" cols="30" rows="5" ng-model="training.desctraining" placeholder="Description" name="desctg"></textarea>
 					</div>
 					<div class="field">
 						<button class="ui button black" type="submit" ng-click="training.addTraining()">Ajouter l'entrainement</button>

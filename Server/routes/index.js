@@ -37,6 +37,7 @@ module.exports = function(pg){
 
 	//Performances
 	router.get('/api/performances', performance.getPerformances);
+	router.get('/api/performances/statistiques', performance.getStatistiques);
 	router.get('/api/performances/:id', performance.getPerformanceById);
 	router.post('/api/performances/:idtraining', performance.addPerformance);
 	router.delete('/api/performances/:id', performance.deletePerformance);

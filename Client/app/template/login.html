@@ -9,13 +9,13 @@
 							<div class="ui label">
 								Login
 							</div>
-							<input type="text" ng-model="login.log" placeholder="Pseudo ou Email" name="login" require>
+							<input type="text" minlength="4" maxlength="20" ng-model="login.log" placeholder="Pseudo ou Email" name="login" require>
 						</div>
 						<div class="ui field labeled input">
 							<div class="ui label">
 								Mot de passe
 							</div>
-							<input type="password" ng-model="login.pwd" placeholder="*********" name="password" require>
+							<input type="password" minlength="8" ng-model="login.pwd" placeholder="*********" name="password" require>
 						</div>
 				</div>
 				<div class="field">

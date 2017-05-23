@@ -4,8 +4,8 @@
 		<h3>Durée de l'entrainement : {{ trainingid.training.totaltime }} minute(s)</h3>
 		<div class="ui divider"></div>
 		<h2>Exercices : </h2>
-		<div style="padding: 10px;" ng-repeat="exo in trainingid.training.exercises">
-			<h4>{{ exo.numero }}. {{ exo.nameexercise }}, durée : {{ exo.last }} minutes.</h4>
+		<div style="padding: 10px;" ng-repeat="(key, exo) in trainingid.training.exercises">
+			<h4>{{ key + 1 }}. {{ exo.nameexercise }}, durée : {{ exo.last }} minutes.</h4>
 			<p style="padding-left: 15px;">Type d'exercice: <span ng-if="exo.type != 'muscu'">Cardio</span><span ng-if="exo.type == 'muscu'">Musculation</span>
 								<div ng-if="exo.type == 'muscu'">
 									<p style="padding-left: 15px;">Nombre de séries: {{ exo.numbertimes }} ; Nombre par série: {{ exo.numbereachtime }}</p>
