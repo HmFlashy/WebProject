@@ -7,12 +7,12 @@ complète de vos séances de musculation.
 Et ce en ayant la possibilité d'avoir un suivi de vos performances.
 
 ## Installation
-Téléchargez ou clonez ce repertoires.
-Téléchargez npm et nodeJS si ce n'est déjà fait.
+Téléchargez ou clonez ce repertoire.
+Installez npm et nodejs si ce n'est déjà fait.
 
 ### Base de donnée
 
-Un fichier database.sql est présent dans le repertoires.
+Un fichier database.sql est présent dans le repertoire.
 Exécutez les différentes requètes (dont le trigger) et votre base est prête.
 Changez les données de votre base dans Server/config/database.js
 
