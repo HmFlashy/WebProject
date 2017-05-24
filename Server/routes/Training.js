@@ -37,7 +37,10 @@ module.exports = function(pg){
                     [req.Tid , id],
                     function(err, data){
                         if(err){
-                            return res.sendStatus(err.http_code);
+                            return res.sendStatus(400);
+                        }
+                        if(data.rows.length == 0){
+                          return res.sendStatus(401);
                         }
                         return res.status(200).json(data.rows);
                     });

@@ -369,7 +369,7 @@ app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", 
 	function($scope, $routeParams, TrainingsFactory, PerformancesFactory){
 
 		this.training = {};
-		this.owner = false;
+		this.owner = true;
 		this.rating = 5;
 		this.rateFunction = function(rating) {
 			console.log('Rating selected: ' + rating);
@@ -377,32 +377,32 @@ app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", 
 
 		this.updateTrainingId = function(){
 			TrainingsFactory.getTrainingById($routeParams.id).then(function(response){
-				var data = response.data;
-				if(data.length > 0){
-					var training = $scope.trainingid.training;
-					training.idtraining = data[0].idtraining;
-					training.nametraining = data[0].nametraining;
-					training.totaltime = data[0].totaltime;
-					training.desctraining = data[0].desctraining;
-					training.exercises = [];
-					for(var row in data){
-						var exercise = {};
-						exercise.idexercise = data[row].idexercise;
-						exercise.numero = data[row].numero;
-						exercise.nameexercise = data[row].nameexercise;
-						exercise.namemachine = data[row].namemachine;
-						exercise.last = data[row].last;
-						if(data[row].numbertimes != undefined){
-							exercise.type = 'muscu';
-							exercise.numbertimes = data[row].numbertimes;
-							exercise.numbereachtime = data[row].numbereachtime;
+					var data = response.data;
+					if(data.length > 0){
+						var training = $scope.trainingid.training;
+						training.idtraining = data[0].idtraining;
+						training.nametraining = data[0].nametraining;
+						training.totaltime = data[0].totaltime;
+						training.desctraining = data[0].desctraining;
+						training.exercises = [];
+						for(var row in data){
+							var exercise = {};
+							exercise.idexercise = data[row].idexercise;
+							exercise.numero = data[row].numero;
+							exercise.nameexercise = data[row].nameexercise;
+							exercise.namemachine = data[row].namemachine;
+							exercise.last = data[row].last;
+							if(data[row].numbertimes != undefined){
+								exercise.type = 'muscu';
+								exercise.numbertimes = data[row].numbertimes;
+								exercise.numbereachtime = data[row].numbereachtime;
+							}
+							training.exercises.push(exercise);
 						}
-						training.exercises.push(exercise);
 					}
-					training.owner = true;
-				}
 			}).catch(function(response){
-
+				$scope.trainingid.owner = false;
+				alert("Une erreur est survenue.");
 			});
 		};
 

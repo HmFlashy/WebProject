@@ -1,5 +1,8 @@
 <section>
-	<div class="ui segment">
+	<div ng-show="!trainingid.owner">
+		<span>Vous n'êtes pas autorisé à accéder à cette ressource</span>
+	</div>
+	<div ng-show="trainingid.owner" class="ui segment">
 		<h1>{{ trainingid.training.nametraining }}</h1>
 		<h3>Durée de l'entrainement : {{ trainingid.training.totaltime }} minute(s)</h3>
 		<div class="ui divider"></div>
