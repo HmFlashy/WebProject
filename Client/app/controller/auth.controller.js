@@ -59,8 +59,9 @@ app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory
 				UserAuthFactory.register(firstname, lastname, pseudo, email, password).then(function(response){
 					$location.path("/connexion");
 				}).catch(function(status){
+          console.log("pasok");
 					if(status.status == 401){
-						alert("Le pseudo est déjà pris")
+						alert("Le pseudo ou email est déjà pris")
 					} else {
 						alert("Une erreur est survenue")
 					}

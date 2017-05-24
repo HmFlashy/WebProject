@@ -72,23 +72,23 @@ module.exports = function(pg){
 
 							//Check if all the variables are correct
 							checkData.register(pg, firstname, lastname, pseudo, password, email).then(function(){
-
-								//If everything is going well we had the new user crypting his password
-								bcrypt.hash(password, 10).then(function(hash) {
+								//If everything is going well we add the new user crypting his password
+								bcrypt.hash(password, 10, function(err, hash) {
 								    pg.query("INSERT INTO users (firstname, lastname, pseudo, email, password) VALUES ($1::text,$2::text,$3::text, $4::text,$5::text)",
 								    		  [firstname,lastname, pseudo, email, hash], function(err, user){
 								    		  	if(err){
-													return res.send(err.http_code);
+															console.log(err);
+															return res.sendStatus(400);
 								    		  	}
 								    		  	return res.status(201).json({ success: true, message: 'User added.', "pseudo": pseudo});
 								    		  });
 								});
 							}).catch(function(err){
-										err = 'message: {' + err + '}';
-										var e = JSON.parse(err);
-										return res.status(400).send({
+									console.log(err);
+										err = '{ message: {' + err + '}}';
+										return res.status(401).send({
 											success: false,
-											messages: e
+											messages: err
 										});
 									});
 

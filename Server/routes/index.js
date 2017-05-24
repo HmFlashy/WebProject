@@ -9,9 +9,10 @@ module.exports = function(pg){
 	var exercice = require('./Exercise.js')(pg);
 	var performance = require('./Performance.js')(pg);
 	var training = require('./Training.js')(pg);
+	var user = require('./User.js')(pg);
 	var auth = require('./auth.js')(pg);
 
-	//Authentification
+	//Authentification and registration
 	router.post('/authenticate', auth.authenticate);
 	router.post('/register', auth.register );
 
@@ -42,10 +43,9 @@ module.exports = function(pg){
 	router.post('/api/performances/:idtraining', performance.addPerformance);
 	router.delete('/api/performances/:id', performance.deletePerformance);
 
-	//Users
-	/*router.get('/api/user/:id', machine.getUserById(pg));
-	router.post('/api/user', machine.addUser(pg));
-	router.put('/api/user/:id', machine.updateUser(pg));
-	router.delete('/api/user/:id', machine.deleteUser(pg));*/
+	//User
+	router.get('/api/user', user.getUserData);
+	router.delete('/api/user', user.deleteUser);
+
 	return router;
 }

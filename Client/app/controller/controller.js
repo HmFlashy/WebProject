@@ -426,8 +426,36 @@ app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", 
 
 
 //Controller for the data page, where the user can see his datas
-app.controller("UserDataCtrl", ["UsersFactory",
-	function(UsersFactory){
+app.controller("UserDataCtrl", ["$scope", "UsersFactory", "UserAuthFactory",
+	function($scope, UsersFactory, UserAuthFactory){
 
+		this.getUserData = function(){
+			UsersFactory.getUserData().then(function(response){
+				if(response == undefined){
+					alert("Une erreur est survenue.")
+				} else {
+					$scope.userdata.firstname = response.data.firstname;
+					$scope.userdata.lastname = response.data.lastname;
+					$scope.userdata.email = response.data.email;
+					$scope.userdata.pseudo = response.data.pseudo;
+				}
+			}).catch(function(response){
+				console.log(response);
+			});
+		};
+
+		this.deleteUser = function(){
+			if(confirm("Es-tu sûr de vouloir supprimer votre compte?")){
+				UsersFactory.deleteUser().then(function(response){
+					console.log(response);
+					UserAuthFactory.logout();
+				}).catch(function(response){
+					console.log(response);
+					alert("Une erreur est survenue.");
+				});
+			}
+		};
+
+		this.getUserData();
 	}
 ]);

@@ -3,43 +3,27 @@
 module.exports = function(pg){
 
 	var user = {
-		getUserById: function(req, res){
-					var id = req.params.id;
-					pg.query('SELECT * FROM Users WHERE idUser=$1::int', [id], function(err, data) {
+		getUserData: function(req, res){
+					pg.query('SELECT firstname, lastname, email, pseudo FROM Users WHERE idUser=$1::int',
+ 					[req.Tid],
+					function(err, data) {
 						if(err) {
-							return res.send(err.http_code);
+							return res.send(400);
 						}
-						if(data.rows.length == 0){
-							res.status(404).send("Machine does not exist");
-						}
-						res.status(200).send(data.rows);
+						res.status(200).send(data.rows[0]);
 					});
 				},
 
-		updateUser: function(req, res){
-
-					var id = req.body.nameMach;
-					var description = req.body.descMachine;
-					var id = req.params.id;
-					pg.query('UPDATE Machine SET machineName=$1::string, description=$2::string WHERE idMachine=$3::int',
-							  [machineName, description, id],
+		deleteUser: function(req, res){
+					pg.query('DELETE FROM users WHERE iduser=$1::int',
+							  [req.Tid],
 							  function(err, data) {
 									if(err) {
-										return res.send(err.http_code);
+										return res.send(400);
 									}
-									res.status(200).send("Machine " + machineName + " updated");
-								});
-				},
-
-		deleteMachine: function(req, res){
-					var id = req.params.id;
-					pg.query('DELETE FROM Machine WHERE idMachine=$1::int',
-							  [id],
-							  function(err, data) {
-									if(err) {
-										return res.send(err.http_code);
-									}
-									res.status(200).send(data.rows);
+									return res.status(200).send({
+										message: "User deleted"
+									});
 								});
 				}
 	}

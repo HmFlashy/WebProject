@@ -1,61 +1,31 @@
-<div>
-	<div class="ui one column stackable center aligned page grid">
-		<div class="column nine wide">
-			<form class="ui segment form registerForm myForm" novalidate>
-				<h2 class="ui dividing header">Mes données</h2>
-				<div class="field">
-					<label>Identité</label>
-					<div class="two fields">
-						<div class="ui field labeled input">
-							<div class="ui label">
-								Prénom
-							</div>
-							<div class="segment">								Hugo
-							</div>
-						</div>
-						<div class="ui field labeled input">
-							<div class="ui label">
-								Maitre
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="field">
-					<div class="ui labeled input">
-						<div class="ui label">
-							Pseudo
-						</div>
-						<input type="text" ng-model="register.pseudo" placeholder="Musclor" name="psd" require>
-					</div>
-				</div>
-				
-				<div class="field">
-					
-				<div class="ui labeled input">
-					<div class="ui label">
-							Email
-						</div>
-						<input type="email" ng-model="register.email" placeholder="grosbibi@gmail.com" name="em" require>
-					</div>
-				</div>
-
-				<div class="field">
-					<label>Pour ne pas te faire voler ton compte : 8 caractères mini</label>
-					<div class="two fields">
-						<div class="field input">
-							<input type="password" ng-model="register.pwd1" placeholder="Mot de Passe" name="pw1" require>
-						</div>
-						<div class="field input">
-							<input type="password" ng-model="register.pwd2" placeholder="Confirmation Mot de Passe" name="pw2" require>
-						</div>
-					</div>
-				</div>
-				<div>
-					<input class="ui orange button myButtons" type="button" ng-click="register.login()" value="J'ai déjà un compte">
-					<input class="ui primary button myButtons" type="submit" ng-click="register.reg()" value="S'inscrire">
-				</div>
-			</form>
+<section>
+	<h2 class="ui dividing header">Identité: </h2>
+	<div class="ui ">
+		<div class="ui labelled">
+			<div class="ui mylabel label">
+				Prénom:
+			</div>
+			<span>{{ userdata.firstname }}</span>
 		</div>
+		<div class="ui labelled">
+			<div class="ui mylabel label">
+				Nom:
+			</div>
+			<span>{{ userdata.lastname }}</span>
+		</div>
+		<div class="ui labelled">
+			<div class="ui mylabel label">
+				Pseudo:
+			</div>
+			<span>{{ userdata.pseudo }}</span>
+		</div>
+		<div class="ui labelled">
+			<div class="ui mylabel label">
+				Email:
+			</div>
+			<span>{{ userdata.email }}</span>
+		</div>
+		<div class="ui divider"></div>
+		<button type="button" class="ui button red" ng-click="userdata.deleteUser()" name="button">Supprimer mon compte</button>
 	</div>
-</div>
+</section>

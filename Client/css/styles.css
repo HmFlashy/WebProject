@@ -65,6 +65,11 @@ section
 	margin: auto;
 }
 
+.mylabel
+{
+  width: 100px;
+}
+
 .resizable
 {
 	resize: true;

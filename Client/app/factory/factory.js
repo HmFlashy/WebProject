@@ -98,7 +98,15 @@ app.factory('PerformancesFactory', ['$http', 'api',
 		}
 	}]);
 
-app.factory('UsersFactory', [
-	function(){
+app.factory('UsersFactory', ['$http', 'api', 'UserAuthFactory',
+	function($http, api, AuthenticationFactory){
+		return {
+			getUserData: function(){
+				return $http.get(api + '/api/user');
+			},
 
+			deleteUser: function(){
+				return $http.delete(api + '/api/user');
+			}
+		}
 }]);

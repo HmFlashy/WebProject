@@ -33,7 +33,6 @@ app.factory('UserAuthFactory', ['$window', 'api', '$location', '$http', 'Authent
         delete $window.sessionStorage.token;
         delete $window.sessionStorage.name;
         delete $window.sessionStorage.id;
-
         $location.path("/connexion");
       }
 

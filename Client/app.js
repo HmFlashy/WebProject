@@ -32,14 +32,6 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
             requiredLogin: true
         }
     })
-    .when('/mes-entrainements/:id', {
-        templateUrl: 'app/template/trainingid.html',
-        controller: 'TrainingIdCtrl',
-        controllerAs: 'trainingid',
-        access: {
-            requiredLogin: true
-        }
-    })
     .when('/mes-exercices', {
         templateUrl: 'app/template/exercices.html',
         controller: 'ExercisesCtrl',
@@ -56,14 +48,6 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
             requiredLogin: true
         }
     })
-    .when('/mon-agenda', {
-        templateUrl: 'app/template/agenda.html',
-        controller: 'AgendaCtrl',
-        controllerAs: 'agenda',
-        access: {
-            requiredLogin: true
-        }
-    })
     .otherwise({
         redirectTo: '/connexion'
     });
@@ -73,7 +57,7 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
 app.run(function($rootScope, $window, $location, AuthenticationFactory) {
   // when the page refreshes, check if the user is already logged in
   AuthenticationFactory.check();
- 
+
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if ((nextRoute.access && nextRoute.access.requiredLogin) && !AuthenticationFactory.isLogged) {
       if(!$location.path() == '/connexion' && $location.path() != '/inscription'){
@@ -86,7 +70,7 @@ app.run(function($rootScope, $window, $location, AuthenticationFactory) {
         }
     }
   });
- 
+
   $rootScope.$on('$routeChangeSuccess', function(event, nextRoute, currentRoute) {
     $rootScope.showMenu = AuthenticationFactory.isLogged;
     // if the user is already logged in, take him to the home page
