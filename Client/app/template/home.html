@@ -3,6 +3,7 @@
 	<div class="horizontal">
 		<div class="nodata" ng-if="home.performances.length == 0">Aucune performance enregistrée ! </div>
 		<div ng-if="!home.noperformances" class="performancebloc" ng-repeat="perf in home.performances | orderBy: '-dateperf'">
+			<i ng-click="home.deletePerformance(perf.idperformance)" class="remove icon"></i>
 			<h3>Entrainement: <span class="trainingname" ng-click="home.goToTraining(perf.idtraining)">{{ perf.nametraining }}<i class="material-icons">touch_app</i></span></h3>
 			<p>Note: <jk-rating-stars max-rating="10" read-only="perf.rating" rating="perf.rating" ></jk-rating-stars></p>
 			<p>Fait le: {{ perf. dateperf}}</p>

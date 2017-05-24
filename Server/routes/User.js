@@ -7,8 +7,8 @@ module.exports = function(pg){
 					pg.query('SELECT firstname, lastname, email, pseudo FROM Users WHERE idUser=$1::int',
  					[req.Tid],
 					function(err, data) {
-						if(err) {
-							return res.send(400);
+						if(err){
+							return res.sendStatus(400);
 						}
 						res.status(200).send(data.rows[0]);
 					});
@@ -19,7 +19,7 @@ module.exports = function(pg){
 							  [req.Tid],
 							  function(err, data) {
 									if(err) {
-										return res.send(400);
+									return res.sendStatus(400);
 									}
 									return res.status(200).send({
 										message: "User deleted"

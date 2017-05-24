@@ -42,13 +42,16 @@ app.controller("HomeCtrl", ["$http", "$scope", "$location", "PerformancesFactory
 		this.updatePerformances();
 		this.updateStatistiques();
 
+
 		this.deletePerformance = function(idperformance){
-			PerformancesFactory.deletePerformance(idperformance).then(function(response){
-				$scope.home.updatePerformances();
-			}).catch(function(respone){
-				alert("Une erreur est survenue");
-			});
-		};
+			if(confirm("Veux-tu vraiment supprimer cette performance?") == true){
+				PerformancesFactory.deletePerformance(idperformance).then(function(response){
+					$scope.home.updatePerformances();
+				}).catch(function(response){
+					alert("Une erreur est survenue.");
+				});
+			}
+		}
 
 		this.goToTraining = function(idtraining){
 			$location.path('/mes-entrainements/'+idtraining);
@@ -352,7 +355,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 		}
 
 		this.deleteTraining = function(idtraining){
-			if(confirm("Voulez vous supprimez cet entrainement?") == true){
+			if(confirm("Voulez-vous supprimer cet entrainement?") == true){
 				TrainingsFactory.deleteTraining(parseInt(idtraining)).then(function(response){
 					$scope.training.updateTrainings();
 				}).catch(function(response){
@@ -445,7 +448,7 @@ app.controller("UserDataCtrl", ["$scope", "UsersFactory", "UserAuthFactory",
 		};
 
 		this.deleteUser = function(){
-			if(confirm("Es-tu sûr de vouloir supprimer votre compte?")){
+			if(confirm("Es-tu sûre de vouloir supprimer ton compte?")){
 				UsersFactory.deleteUser().then(function(response){
 					console.log(response);
 					UserAuthFactory.logout();

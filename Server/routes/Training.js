@@ -15,7 +15,7 @@ module.exports = function(pg){
                       [req.Tid],
                     function(err, data){
                       if(err){
-                        return res.sendStatus(err.http_code);
+        							return res.sendStatus(400);
                       }
                       return res.status(200).json(data.rows);
                   });
@@ -56,7 +56,7 @@ module.exports = function(pg){
                 [nametraining, desctraining, req.Tid],
                 function(err, data){
                     if(err){
-                        return res.sendStatus(err.http_code);
+      							return res.sendStatus(400);
                     }
                     return res.status(200).send(data.rows);
                 });
@@ -73,7 +73,7 @@ module.exports = function(pg){
                 [idexercise, idtraining, numero, last, numbertimes, numbereachtime],
                 function(err, data){
                     if(err){
-                        return res.sendStatus(err.http_code)
+      							return res.sendStatus(400);
                     }
                     return res.status(200).send({
                         message: "Training inserted"
@@ -87,7 +87,7 @@ module.exports = function(pg){
                   [id, req.Tid],
                   function(err, data){
                     if(err){
-                      return res.sendStatus(err.http_code);
+      							return res.sendStatus(400);
                     }
                     return res.status(200).send({
                       message: "Training deleted"

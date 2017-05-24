@@ -24,9 +24,7 @@ module.exports = function(pg){
 
 	//Exercises
 	router.get('/api/exercises', exercice.getExercises);
-	router.get('/api/exercises/:id', exercice.getExerciseById);
 	router.post('/api/exercises', exercice.addExercise);
-	router.put('/api/exercises/:id', exercice.updateExercise);
 	router.delete('/api/exercises/:id', exercice.deleteExercise);
 
 	//Trainings

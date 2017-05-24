@@ -7,7 +7,7 @@ module.exports = function(pg){
 					pg.query('SELECT idexercise, nameexercise, descexercise, e.idmachine, namemachine FROM exercise e LEFT JOIN machine m ON e.idmachine = m.idmachine WHERE e.iduser=$1::int', [req.Tid], function(err, data) {
 						if(err) {
 							console.log(err);
-							return res.send(err.http_code);
+							return res.sendStatus(400);
 						}
 						return res.status(200).send(data.rows);
 					});
@@ -17,7 +17,7 @@ module.exports = function(pg){
 					var id = req.params.id;
 					pg.query('SELECT idexercise, nameexercise, descexercise, e.idmachine, namemachine FROM exercise e LEFT JOIN machine m ON e.idmachine = m.idmachine WHERE idexercise=$1::int AND e.iduser=$2::int', [id, req.Tid], function(err, data) {
 						if(err) {
-							return res.send(err.http_code);
+						return res.sendStatus(400);
 						}
 						if(data.rows.length == 0){
 							res.status(404).send("This Exercise does not exist");
@@ -31,7 +31,7 @@ module.exports = function(pg){
 					var description = req.body.descExerc;
 					var idmachine = req.body.machine;
 					if(description == undefined || exerciseName == undefined){
-						return res.send(400);
+					return res.sendStatus(400);
 					}
 					pg.query("INSERT INTO exercise (nameexercise, descexercise, idmachine, iduser) VALUES ($1::text,$2::text, $3::int, $4::int) RETURNING *",
 						      [exerciseName, description, idmachine, req.Tid],
@@ -49,7 +49,7 @@ module.exports = function(pg){
 					var idexercise = req.params.idExerc;
 					var idmachine = req;
 					if(id == undefined || description == undefined || exerciseName == undefined){
-						return res.send(400);
+					return res.sendStatus(400);
 					}
 					pg.query('UPDATE exercise SET iduser=$1::int, idexercise=$2::int, idmachine=$3::int, nameexercise=$4::text, descexercise=$5::text',
 						[req.Tid, idexercise, idmachine, exerciseName, description],
@@ -65,7 +65,7 @@ module.exports = function(pg){
 		deleteExercise: function(req, res){
 					var id = req.params.id;
 					if(id == undefined){
-						return res.send(400);
+					return res.sendStatus(400);
 					}
 					pg.query('DELETE FROM exercise WHERE idexercise=$1::int AND iduser=$2::int',
 							  [id, req.Tid],

@@ -20,7 +20,7 @@ var performance = {
   getPerformanceById: function(req, res){
     var idperformance = req.params.id;
     if(idperformance == undefined){
-      return res.send(400);
+    return res.sendStatus(400);
     }
     pg.query('SELECT p.*, idtraining, nametraining  \
           FROM performance p \
@@ -50,7 +50,6 @@ var performance = {
               [req.Tid],
             function(err, data){
               if(err){
-                console.log(err);
                 return res.sendStatus(400);
               }
               return res.status(200).send(data.rows);
@@ -68,7 +67,7 @@ var performance = {
                   [rating, comment, req.Tid, idtraining],
                   function(err, data){
                     if(err){
-                      return res.sendStatus(err.http_code);
+      							return res.sendStatus(400);
                     }
                     return res.status(200).send({
                       message: "Performance added"
@@ -78,11 +77,12 @@ var performance = {
 
   deletePerformance: function(req, res){
             var id = req.params.id;
-            pg.query('DELETE FROM performance WHERE idperformance=$1::int AND iduser=2::int',
+            pg.query('DELETE FROM performance WHERE idperformance=$1::int AND iduser=$2::int',
                   [id, req.Tid],
                   function(err, data){
                     if(err){
-                      return res.sendStatus(err.http_code);
+                              console.log(err);
+      							         return res.sendStatus(400);
                     }
                     return res.status(200).send({
                       status: true,
