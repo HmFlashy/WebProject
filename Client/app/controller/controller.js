@@ -272,7 +272,7 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 			}
 		});
 
-		//This event is called when a exercise is added to the database
+		//This event is called when an exercise is added to the database
 		this.count = 1;
 		$scope.$on('oneMoreReady', function(event){
 			if($scope.training.count == $scope.training.numero){
@@ -405,7 +405,6 @@ app.controller("TrainingIdCtrl", ["$scope", "$routeParams", "TrainingsFactory", 
 					}
 			}).catch(function(response){
 				$scope.trainingid.owner = false;
-				alert("Une erreur est survenue.");
 			});
 		};
 
