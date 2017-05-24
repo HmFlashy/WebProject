@@ -32,6 +32,14 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
             requiredLogin: true
         }
     })
+    .when('/mes-entrainements/:id', {
+        templateUrl: 'app/template/trainingid.html',
+        controller: 'TrainingIdCtrl',
+        controllerAs: 'trainingid',
+        access: {
+            requiredLogin: true
+        }
+    })
     .when('/mes-exercices', {
         templateUrl: 'app/template/exercices.html',
         controller: 'ExercisesCtrl',
