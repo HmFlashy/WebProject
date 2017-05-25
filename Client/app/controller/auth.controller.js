@@ -19,6 +19,7 @@ app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory'
 					$window.sessionStorage.token = data.token;
 					$window.sessionStorage.user = data.name;
 					$window.sessionStorage.iduser = data.id;
+          alert("Connection réussie !")
 					$location.path("/mon-espace");
 
 		        }).catch(function(status) {
@@ -57,9 +58,9 @@ app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory
 				this.pwd2 = "";
 			} else {
 				UserAuthFactory.register(firstname, lastname, pseudo, email, password).then(function(response){
+          alert("Vous êtes bien inscrit, veuillez maintenant vous connecter..")
 					$location.path("/connexion");
 				}).catch(function(status){
-          console.log("pasok");
 					if(status.status == 401){
 						alert("Le pseudo ou email est déjà pris")
 					} else {

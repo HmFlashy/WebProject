@@ -58,7 +58,7 @@ module.exports = function(pg){
                     if(err){
       							return res.sendStatus(400);
                     }
-                    return res.status(200).send(data.rows);
+                    return res.status(201).send(data.rows);
                 });
         },
 
@@ -69,13 +69,21 @@ module.exports = function(pg){
             var last = req.body.last;
             var numbertimes = req.body.numbertimes;
             var numbereachtime = req.body.numbereachtime;
+            if(numbertimes == undefined || numbereachtime == undefined){
+              if(numbertimes != undefined || numbereachtime != undefined){
+                return res.sendStatus(400);
+              }
+            }
+            if(numero == undefined || last == undefined || idtraining == undefined || idexercise == undefined){
+              return res.sendStatus(400);
+            }
             pg.query('INSERT INTO contain (idexercise, idtraining, numero, last, numbertimes, numbereachtime) VALUES ($1::int, $2::int, $3::int, $4::int, $5::int, $6::int)',
                 [idexercise, idtraining, numero, last, numbertimes, numbereachtime],
                 function(err, data){
                     if(err){
       							return res.sendStatus(400);
                     }
-                    return res.status(200).send({
+                    return res.status(201).send({
                         message: "Training inserted"
                     });
                 });

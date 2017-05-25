@@ -69,7 +69,7 @@ var performance = {
                     if(err){
       							return res.sendStatus(400);
                     }
-                    return res.status(200).send({
+                    return res.status(201).send({
                       message: "Performance added"
                     })
                   });
