@@ -11,31 +11,29 @@
 			<i ng-click="exercise.deleteExercise(exo.idexercise)" class="remove icon"></i>
 			<h3>{{ exo.nameexercise }} :</h3>
 			<p>Machine: <span ng-if="exo.namemachine!=undefined">{{ exo.namemachine }}</span><span ng-if="exo.namemachine==undefined">Aucune</span></p>
-			<p>{{ exo.descexercise }}</p>
+			<p class="descbloc">{{ exo.descexercise }}</p>
 		</div>
 	</div>
 </section>
 <section>
-		<form class="ui form" novalidate>
-				<div class="ui two column stackable center aligned grid">
-					<div class="column">
-						<h2 class="ui dividing header">Une nouvelle machine?</h2>
-						<div class="ui field input">
-							<div class="ui action input field">
-								<input type="text" maxlength="20" class="ui compact" ng-model="exercise.newmachine" placeholder="Nom de la machine" name="ajoutmachine">
-								<button class="ui button" ng-click="exercise.addMachine()"><i class="plus icon"></i></button>
-						    </div>
-						</div>
-						<div class="ui " style="max-height: 400px; overflow: auto;">
-							<div ng-repeat="mch in exercise.mchs">
-								<span>{{ mch.namemachine }}</span>
-								<i class="remove icon" ng-click="exercise.deleteMachine(mch.idmachine)"></i>
-							</div>
+		<div class="ui two columns stackable center aligned grid">
+				<form class="ui column form" novalidate>
+					<h2 class="ui dividing header">Une nouvelle machine?</h2>
+					<div class="ui field input">
+						<div class="ui action input field">
+							<input type="text" maxlength="20" class="ui compact" ng-model="exercise.newmachine" placeholder="Nom de la machine" name="ajoutmachine">
+							<button class="ui button" ng-click="exercise.addMachine()"><i class="plus icon"></i></button>
+					    </div>
+					</div>
+					<div class="ui " style="max-height: 400px; overflow: auto;">
+						<div ng-repeat="mch in exercise.mchs">
+							<span>{{ mch.namemachine }}</span>
+							<i class="remove icon" ng-click="exercise.deleteMachine(mch.idmachine)"></i>
 						</div>
 					</div>
-					<div class="column">
+				</form>
+				<form class="ui form column" ng-model="" novalidate>
 						<h2 class="ui dividing header">Ajoutez un exercice:</h2>
-						<div class="ui field input">
 							<div class="field">
 								<div class="ui two fields">
 								<div class="field">
@@ -44,15 +42,18 @@
 										<option ng-repeat="mch in exercise.mchs" value="{{ mch.idmachine }}">{{ mch.namemachine }}</option>
 										</select>
 								</div>
-									<div class="field">
-										<input type="text" maxlength="128" ng-model="exercise.nameexercise" name="nmExercice" placeholder="Nom de l'exercice" require>
+									<div class="ui field labeled input">
+										<div class="ui label">
+											Nom
+										</div>
+										<input type="text" maxlength="20" ng-model="exercise.nameexercise" name="nmExercice" placeholder="20 caractères max" require>
 									</div>
 								</div>
 								<div class="field">
 									<div class="ui form">
 										<div class="field">
-											<label>Ton exercice en quelques lignes</label>
-											<textarea rows="1" ng-model="exercise.descexercise"></textarea>
+											<label>Ton exercice en quelques mots</label>
+											<textarea rows="1" maxlength="128" placeholder="128 caractères max" ng-model="exercise.descexercise"></textarea>
 										</div>
 									</div>
 								</div>
@@ -63,9 +64,6 @@
 								</div>
 							</div>
 
-						</div>
-					</div>
 				</form>
 			</div>
-		</div>
 </section>

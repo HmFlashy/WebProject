@@ -12,6 +12,13 @@ html, body
 	background-repeat: no-repeat;
 }
 
+input.ng-invalid {
+    background-color: pink;
+}
+input.ng-valid {
+    background-color: lightgreen;
+}
+
 h3
 {
 	margin-top:5px;
@@ -92,6 +99,11 @@ section
 	box-shadow: 0 0 1px 1px rgba(0,0,0,0.3) ;
 
 
+}
+
+.descbloc
+{
+  display: block;
 }
 
 

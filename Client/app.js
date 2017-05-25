@@ -6,7 +6,7 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('TokenInterceptor');
     $routeProvider
-    .when('/connexion', {
+    .when('/connection', {
         templateUrl: 'app/template/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'login'
@@ -41,7 +41,7 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
         }
     })
     .when('/mes-exercices', {
-        templateUrl: 'app/template/exercices.html',
+        templateUrl: 'app/template/exercises.html',
         controller: 'ExercisesCtrl',
         controllerAs: 'exercise',
         access: {
@@ -57,7 +57,7 @@ app.config(["$httpProvider" ,"$locationProvider", "$routeProvider", function ($h
         }
     })
     .otherwise({
-        redirectTo: '/connexion'
+        redirectTo: '/connection'
     });
 }]);
 
@@ -68,13 +68,14 @@ app.run(function($rootScope, $window, $location, AuthenticationFactory) {
 
   $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
     if ((nextRoute.access && nextRoute.access.requiredLogin) && !AuthenticationFactory.isLogged) {
-      if(!$location.path() == '/connexion' && $location.path() != '/inscription'){
-            $location.path("/connexion");
+      if(!$location.path() == '/connection' && $location.path() != '/inscription'){
+            $location.path("/connection");
         }
     } else {
       // check if user object exists else fetch it. This is incase of a page refresh
       if (!AuthenticationFactory.name) {
             AuthenticationFactory.name = $window.sessionStorage.name;
+            AuthenticationFactory.id = $window.sessionStorage.id;
         }
     }
   });

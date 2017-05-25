@@ -41,7 +41,7 @@ app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory
 	function($scope, $http, $location, UserAuthFactory, AuthenticationFactory){
 
 		this.login = function(){
-			$location.path('/connexion');
+			$location.path('/connection');
 		}
 		this.reg = function(){
 			var firstname = this.firstname || '';
@@ -50,16 +50,16 @@ app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory
 			var email = this.email || '';
 			var password = this.pwd1 || '';
 			var password2 = this.pwd2 || '';
-			if(firstname == '' || lastname == '' || pseudo == '' || email == '' || password == '' || password2 == ''){
-				alert("Des informations sont manquantes")
+			if(!this.regform.$valid || firstname == '' || lastname == '' || pseudo == '' || email == '' || password == '' || password2 == ''){
+				alert("Des informations sont manquantes ou erronées");
 			} else if(password != password2){
-				alert("Les deux mots de passes sont différents")
+				alert("Les deux mots de passe sont différents");
 				this.pwd1 = "";
 				this.pwd2 = "";
 			} else {
 				UserAuthFactory.register(firstname, lastname, pseudo, email, password).then(function(response){
           alert("Vous êtes bien inscrit, veuillez maintenant vous connecter..")
-					$location.path("/connexion");
+					$location.path("/connection");
 				}).catch(function(status){
 					if(status.status == 401){
 						alert("Le pseudo ou email est déjà pris")

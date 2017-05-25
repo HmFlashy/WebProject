@@ -155,7 +155,7 @@ app.controller("ExercisesCtrl", ["$location", "$http", "$scope", "api", "Exercis
 				} else {
 					machine = parseInt(this.choixmachine);
 				}
-				ExercisesFactory.addExercise(this.nameexercise, this.descexercise.replace("/(?:\\r\\n|\\r|\\n)/g", '<br />'), machine).then(function(response){
+				ExercisesFactory.addExercise(this.nameexercise, this.descexercise, machine).then(function(response){
 					var data = response.data;
 					$scope.exercise.updateExercises();
 					alert("Exercice rajouté !");
