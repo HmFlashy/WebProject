@@ -255,6 +255,8 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 				this.isCardio = false;
 			} else {
 				this.isCardio = true;
+				this.nbseries = undefined;
+				this.numbereachtime = undefined;
 			}
 		};
 
@@ -285,11 +287,11 @@ app.controller("TrainingsCtrl", ["$scope", "$location", "TrainingsFactory", "Exe
 
 		this.clearExerciseForm = function(){
 				this.isCardio = true;
-				this.type = "";
-				this.idexercise = "";
-				this.last = "";
-				this.nbseries = "";
-				this.numbereachtime = "";
+				this.type = undefined;
+				this.exercisechosen = undefined;
+				this.last = undefined;
+				this.nbseries = undefined;
+				this.numbereachtime = undefined;
 		};
 
 		this.clearTrainingForm = function(){

@@ -1,7 +1,7 @@
 <div class="lobby">
 	<div class="ui one column stackable center aligned page grid">
 		<div class="column nine wide">
-			<form ng-model="regform" class="ui segment form registerForm myForm" novalidate>
+			<form name="regform"  ng-submit="register.reg(regform.$valid)" class="ui segment form registerForm myForm" novalidate>
 				<h2 class="ui dividing header">JUST DO IT</h2>
 				<div class="field">
 					<label>Identité</label>
@@ -53,7 +53,7 @@
 				</div>
 				<div>
 					<input class="ui orange button myButtons" type="button" ng-click="register.login()" value="J'ai déjà un compte">
-					<input class="ui primary button myButtons" type="submit" ng-click="register.reg()" value="S'inscrire">
+					<input class="ui primary button myButtons" type="submit" value="S'inscrire">
 				</div>
 			</form>
 		</div>

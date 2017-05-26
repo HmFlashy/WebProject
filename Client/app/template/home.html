@@ -4,7 +4,7 @@
 		<div class="nodata" ng-if="home.performances.length == 0">Aucune performance enregistrée ! </div>
 		<div ng-if="!home.noperformances" class="performancebloc" ng-repeat="perf in home.performances | orderBy: '-dateperf'">
 			<i ng-click="home.deletePerformance(perf.idperformance)" class="remove icon"></i>
-			<h3>Entrainement: <span class="trainingname" ng-click="home.goToTraining(perf.idtraining)">{{ perf.nametraining }}<i class="material-icons">touch_app</i></span></h3>
+			<h3>Entraînement: <span class="trainingname" ng-click="home.goToTraining(perf.idtraining)">{{ perf.nametraining }}<i class="material-icons">touch_app</i></span></h3>
 			<p>Note: <jk-rating-stars max-rating="10" read-only="perf.rating" rating="perf.rating" ></jk-rating-stars></p>
 			<p>Fait le: {{ perf. dateperf}}</p>
 			<h4>Commentaires: </h4>
@@ -14,10 +14,23 @@
 </section>
 <section>
 	<h2 class="ui dividing header">Quelques statistiques :</h2>
-	<div class="ui">
+	<div ng-if="home.performances.length == 0" class="ui">
+		<p>Aucune donnée à traiter !</p>
+	</div>
+	<div ng-if="home.performances.length != 0" class="ui">
 		<p>Vous avez fait {{ home.totalperfsmonth }} séance(s) dans le mois</p>
 		<p>Vous avez fais {{ home.totalperformances }} séance(s) depuis votre inscription</p>
 		<p>Vous vous entrainez le plus souvent et le plus récemment sur l'entrainement: {{ home.besttraining }}</p>
 		<p>Vos peformances ont une moyenne de {{ home.averagerating }} / 10</p>
 	</div>
+</section>
+<section>
+	<h2>Quelques instructions: </h2>
+	<p>Si vous êtes nouveau sur le site veuillez lire ces instructions.</p>
+	<p>Ce site vous permet de créer différents entraînements.</p>
+	<p>Pour ce faire vous devez tout d'abord rajouter vos différents exercices en leur attribuant ou non une machine.</p>
+	<p>Ensuite grâce à vos exercices, vous pouvez créer vos entraînement dans la section entraînement en ajoutant vos exercices un par un.</p>
+	<p>Ensuite vous avez accès aux information de l'entraînement en cliquant sur votre nouvel entraînement et depuis cet section vous pouvez ajouter des performances.</p>
+	<p>Les performances sont ensuite affichés ici !</p>
+	<p>Enjoy !</p>
 </section>

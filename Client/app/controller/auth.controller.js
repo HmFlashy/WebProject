@@ -25,11 +25,11 @@ app.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactory'
 		        }).catch(function(status) {
 		        	if (status.status == 401)
 			            alert("Le mot de passe est incorrect");
-					else if (status.status == 404)
-						alert("Le nom d'utilisateur ou email est incorrect");
-					else
-						alert("Une erreur est survenue");
-		        });
+    					else if (status.status == 404)
+    						alert("Le nom d'utilisateur ou email est incorrect");
+    					else
+    						alert("Une erreur est survenue");
+    		        });
 		      } else {
 		      	alert("Des informations sont manquantes");
 		     }
@@ -43,14 +43,14 @@ app.controller("RegisterCtrl", ["$scope", "$http", "$location", "UserAuthFactory
 		this.login = function(){
 			$location.path('/connection');
 		}
-		this.reg = function(){
+		this.reg = function(valid){
 			var firstname = this.firstname || '';
 			var lastname = this.lastname || '';
 			var pseudo = this.pseudo || '';
 			var email = this.email || '';
 			var password = this.pwd1 || '';
 			var password2 = this.pwd2 || '';
-			if(!this.regform.$valid || firstname == '' || lastname == '' || pseudo == '' || email == '' || password == '' || password2 == ''){
+			if(!valid || firstname == '' || lastname == '' || pseudo == '' || email == '' || password == '' || password2 == ''){
 				alert("Des informations sont manquantes ou erronées");
 			} else if(password != password2){
 				alert("Les deux mots de passe sont différents");
